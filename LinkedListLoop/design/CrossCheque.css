@@ -1,0 +1,27 @@
+﻿.MainPageBody {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.MainPageImage {
+    background-image: url("../../img/Cheque.png");
+    width:620px;
+    height:280px;
+    background-repeat:no-repeat;
+}
+
+.TopMenu {
+    position: relative;
+}
+
+.ChequeLoopMain {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    transform: translateX(-20%) translateY(-20%);
+}
+
+
+

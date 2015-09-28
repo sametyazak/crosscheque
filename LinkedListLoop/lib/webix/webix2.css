@@ -63,18 +63,61 @@
     font-weight: bold;
 }
 
+#ProcessArea {
+    width:100%;
+}
+
+#UploadArea {
+    float:left;
+    width: 46%;
+    border: 0 solid #ddd;
+    border-width:1px;
+    margin-right:40px;
+}
+
+#SampleArea {
+    float:left;
+    width: 45%;
+    border: 0 solid #ddd;
+    border-width:1px;
+}
+
+#DataArea {
+    width:100%;	 	 
+}
 
 #SenderList {
     float:left;
+    width:50%;
 }
 #LoopAction {
-    width:150px;
-    padding:10px;	 	 
+    width:100%;	 	 
+    padding-top:15px;
 }
 #LoopList {
-    width:350px;
-    float:left;
-    padding-left:25px;	 	 
+    width:50%;
+    float:right; 	 
+}
+
+#GridArea {
+    padding-top:10px;
+}
+
+.ColumnHeader {
+    background: #d2e3ef;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 10px;
+    font-size: 15px;
+    color: #4a4a4a;
+    font-family: 'PT Sans',Tahoma;
+    width:100%;
+    box-sizing: border-box;
+}
+
+.ColumnBody {
+    padding:10px;
+    margin: auto;
 }
 
 #header {

@@ -1,0 +1,90 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Ubuntu&subset=latin,cyrillic-ext,greek-ext,greek,latin-ext,cyrillic);
+ul#TopMenu,ul#TopMenu ul{
+	margin:0;list-style:none;padding:0;background-color:rgba(255,255,255,0.9);border-width:0;border-style:solid;}
+ul#TopMenu ul{
+	display:none;position:absolute;left:0;top:100%;background-color:transparent;padding:0;}
+ul#TopMenu li:hover>*{
+	display:block;}
+ul#TopMenu li{
+	position:relative;display:block;white-space:nowrap;font-size:0;float:left;}
+ul#TopMenu li:hover{
+	z-index:1;}
+ul#TopMenu ul ul{
+	position:absolute;left:100%;top:0;}
+ul#TopMenu{
+	font-size:0;z-index:999;position:relative;display:inline-block;zoom:1;padding:15px 15px 15px 10px;background-color:none;border-radius:0px;-moz-border-radius:0px;-webkit-border-radius:0px;
+	*display:inline;}
+* html ul#TopMenu li a{
+	display:inline-block;}
+ul#TopMenu>li{
+	margin:0 0 0 5px;}
+ul#TopMenu ul>li{
+	margin:5px 0 0;}
+ul#TopMenu a:active, ul#TopMenu a:focus{
+	outline-style:none;}
+ul#TopMenu a{
+	display:block;vertical-align:middle;text-align:left;text-decoration:none;font:12px Ubuntu,sans-serif;color:#000000;cursor:pointer;padding:3px;background-color:;background-repeat:repeat;border-width:0px;border-style:none;}
+ul#TopMenu ul li{
+	float:none;margin:0;}
+ul#TopMenu ul a{
+	text-align:left;padding:9px 28px;background-color:#FFFFFF;border-width:1px;border-style:solid none none none;border-color:#e2e2e2;font:12px Ubuntu,sans-serif;color:#333333;text-decoration:none;}
+ul#TopMenu li:hover>a,ul#TopMenu li a.pressed{
+	border-style:none;color:#FFFFFF;text-decoration:none;}
+ul#TopMenu ul span{
+	background-image:none;padding-right:9px;}
+ul#TopMenu > li.switch{
+	display:none;cursor:pointer;width:25px;height:20px;padding:9px 28px;}
+ul#TopMenu > li.switch:before{
+	content:"";position:absolute;display:block;height:4px;width:25px;border-radius:4px;background:#333333;-moz-box-shadow:0 8px #333333, 0 16px #333333;-webkit-box-shadow:0 8px #333333, 0 16px #333333;box-shadow:0 8px #333333, 0 16px #333333;}
+ul#TopMenu > li.switch:hover:before{
+	background:#fefeff;-moz-box-shadow:0 8px #fefeff, 0 16px #fefeff;-webkit-box-shadow:0 8px #fefeff, 0 16px #fefeff;box-shadow:0 8px #fefeff, 0 16px #fefeff;}
+.c3m-switch-input{
+	display:none;}
+ul#TopMenu ul li:hover>a,ul#TopMenu ul li a.pressed{
+	background-color:#1C7ED1;border-style:solid none none none;border-color:#e2e2e2;color:#fefeff;text-decoration:none;}
+ul#TopMenu>li>a{
+	padding:9px 28px;}
+ul#TopMenu li.topmenuitem>a{
+	background-color:transparent;border-width:1px;border-style:solid;border-color:#d1d1d1;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;padding:9px 28px;color:#333333;}
+ul#TopMenu li.topmenuitem:hover>a,ul#TopMenu li.topmenuitem a.pressed{
+	background-color:#1C7ED1;border-style:solid;border-color:#1C7ED1;color:#fefeff;}
+ul#TopMenu li.subfirst>a{
+	border-color:transparent;border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;-webkit-border-radius:5px;-webkit-border-bottom-right-radius:0;-webkit-border-bottom-left-radius:0;}
+ul#TopMenu li.subfirst:hover>a,ul#TopMenu li.subfirst a.pressed{
+	border-color:transparent;}
+
+@media screen and (max-width: 768px) {
+	ul#TopMenu > li {
+		position: initial;}
+	ul#TopMenu ul .submenu,ul#TopMenu li > ul {
+		left: 0; right:auto; top: 100%;}
+	ul#TopMenu .submenu,ul#TopMenu ul,ul#TopMenu .column {
+		-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;padding-right: 0;width: 100% !important;}
+}
+
+@media screen and (max-width: 595px) {
+	ul#TopMenu {
+		width: 100%;}
+	ul#TopMenu > li {
+		display: none;		position: relative;		width: 100% !important;}
+	ul#TopMenu > li.switch,.c3m-switch-input:checked + ul#TopMenu > li + li {
+		display: block;}
+	ul#TopMenu > li.switch > label {		position: absolute;cursor: pointer;top: 0;left: 0;right: 0;bottom: 0;}
+}
+
+.TopMenuContainer {
+    position: relative;
+}
+
+.TopMenuContainer .RightMenu {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.TopMenuContainer .Logo {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    margin-left:175px;
+}
