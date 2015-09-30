@@ -77,7 +77,28 @@
     <Content Include="external_reference\Newtonsoft.Json.xml" />
     <Content Include="FileDownload.aspx" />
     <Content Include="img\Cheque.PNG" />
+    <Content Include="img\logo.png" />
     <Content Include="lib\jquery\jquery-2.1.4.min.js" />
+    <Content Include="lib\vis\img\network\acceptDeleteIcon.png" />
+    <Content Include="lib\vis\img\network\addNodeIcon.png" />
+    <Content Include="lib\vis\img\network\backIcon.png" />
+    <Content Include="lib\vis\img\network\connectIcon.png" />
+    <Content Include="lib\vis\img\network\cross.png" />
+    <Content Include="lib\vis\img\network\cross2.png" />
+    <Content Include="lib\vis\img\network\deleteIcon.png" />
+    <Content Include="lib\vis\img\network\downArrow.png" />
+    <Content Include="lib\vis\img\network\editIcon.png" />
+    <Content Include="lib\vis\img\network\leftArrow.png" />
+    <Content Include="lib\vis\img\network\minus.png" />
+    <Content Include="lib\vis\img\network\plus.png" />
+    <Content Include="lib\vis\img\network\rightArrow.png" />
+    <Content Include="lib\vis\img\network\upArrow.png" />
+    <Content Include="lib\vis\img\network\zoomExtends.png" />
+    <Content Include="lib\vis\img\timeline\delete.png" />
+    <Content Include="lib\vis\vis.css" />
+    <Content Include="lib\vis\vis.js" />
+    <Content Include="lib\vis\vis.min.css" />
+    <Content Include="lib\vis\vis.min.js" />
     <Content Include="lib\webix\webix2.css" />
     <Content Include="lib\webix\webix.css" />
     <Content Include="lib\webix\webix.js" />
@@ -109,6 +130,7 @@
       <DependentUpon>ChequeLoop.aspx</DependentUpon>
     </Compile>
     <Compile Include="src\server\entities\ChequeTree.cs" />
+    <Compile Include="src\server\entities\LoopProcessResult.cs" />
     <Compile Include="src\server\entities\LoopResult.cs" />
     <Compile Include="FileDownload.aspx.cs">
       <DependentUpon>FileDownload.aspx</DependentUpon>
@@ -139,6 +161,7 @@
     <Content Include="FileUploader.ashx" />
     <Content Include="CrossCheque.Master" />
     <Content Include="ServerCall.ashx" />
+    <Content Include="lib\vis\vis.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

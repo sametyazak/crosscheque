@@ -64,16 +64,28 @@ namespace LinkedListLoop.src.server
             return JsonConvert.SerializeObject((Common.GetFileChequeList(path, false)));
         }
 
-        public static List<LoopResult> GetFilteredLoops(List<ChequeInfo> senderList)
+        public static LoopProcessResult GetFilteredLoops(List<ChequeInfo> senderList)
         {
-            List<LoopResult> loops = GetTreeLoops(senderList);
+            LoopProcessResult result = new LoopProcessResult();
 
-            if (loops != null)
+            if (senderList != null)
             {
-                loops = loops.Where(a => a.HasLoop).ToList();
+                List<LoopResult> loops = GetTreeLoops(senderList);
+
+                if (loops != null)
+                {
+                    loops = loops.Where(a => a.HasLoop).ToList();
+                }
+
+                List<string> nodeList = new List<string>();
+                nodeList = senderList.Select(a => a.Sender).ToList();
+                nodeList.AddRange(senderList.Select(a => a.Receiver).ToList());
+
+                result.LoopList = loops;
+                result.NodeList = nodeList.Distinct().ToList();
             }
 
-            return loops;
+            return result;
         }
 
         public static List<LoopResult> GetTreeLoops(List<ChequeInfo> chequeList)

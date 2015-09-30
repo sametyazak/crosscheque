@@ -2,6 +2,18 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="ChequeLoop.js"></script>
+    <link href="../lib/vis/vis.css" rel="stylesheet" />
+    <script src="../lib/vis/vis.js"></script>
+
+    <style type="text/css">
+        #ChequeNetwork {
+            border: 1px solid lightgray;
+
+            margin: auto;
+            width: 80%;
+            height:600px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="CrossChequeBody" runat="server">
     <script type="text/javascript" charset="utf-8">
@@ -75,4 +87,9 @@
 
         </div>
     </div>
+
+    <div id="ChequeNetwork">
+
+    </div>
+
 </asp:Content>

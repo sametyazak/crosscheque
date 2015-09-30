@@ -20,6 +20,12 @@
 <body>
     <form id="DefaultForm" runat="server">
         <asp:HiddenField ID="RootAddress" runat="server" />
+        <div class="overlay" id="MasterOverlay">
+            <div>
+                Yükleniyor...
+            </div>
+        </div>
+        
         <div class="TopMenuContainer">
             <div class="Logo">
                 <img src="<%= Page.ResolveUrl("~/img/logo2.png") %>" style="height:110px;" />

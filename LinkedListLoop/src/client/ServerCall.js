@@ -8,6 +8,8 @@
         var queryData = 'queryData=' + postData;
         var url = $('#RootAddress').val() + '/ServerCall.ashx';
 
+        ServerCall.ShowOverlay();
+
         $.ajax({
             type: "POST",
             url: url,
@@ -26,11 +28,15 @@
                         ServerCall.DynamicCall(successCallBack, [returnObject]);
                     }
                 }
+
+                ServerCall.HideOverlay();
             },
             fail: function (transport) {
                 if (ServerCall.IsFunction(failCallBack)) {
                     ServerCall.DynamicCall(failCallBack, []);
                 }
+
+                ServerCall.HideOverlay();
             }
         });
     },
@@ -43,5 +49,24 @@
     DynamicCall: function (func, args) {
         var myObject;
         myObject = func.apply(myObject, args);
+    },
+
+    ShowOverlay: function ()
+    {
+        var overlayEl = $('#MasterOverlay');
+
+        if (overlayEl)
+        {
+            overlayEl.show();
+        }
+    },
+
+    HideOverlay: function ()
+    {
+        var overlayEl = $('#MasterOverlay');
+
+        if (overlayEl) {
+            overlayEl.hide();
+        }
     }
 };

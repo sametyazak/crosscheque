@@ -183,7 +183,9 @@ function GetProcessResults(senderList) {
     ServerCall.Execute('GetFilteredLoops', senderList, SetLoopResults, null);
 }
 
-function SetLoopResults(loopList) {
+function SetLoopResults(loopListResult) {
+    var loopList = loopListResult.LoopList;
+
     if ($$("LoopDt")) {
         $$("LoopDt").clearAll();
 
@@ -230,6 +232,8 @@ function SetLoopResults(loopList) {
             });
     }
 
+    SetChequeNetwork(loopListResult);
+
 }
 
 function GetSampleData() {
@@ -262,12 +266,47 @@ function LoadFile() {
     });
 }
 
-function SetFileRecords(path)
-{
+function SetFileRecords(path) {
     ServerCall.Execute('GetFileRecords', path, SetGridData, null);
 }
 
-function GetSampleDownloadLink()
-{
+function GetSampleDownloadLink() {
     ServerCall.Execute('GetSampleDownloadLink', null, null, null);
+}
+
+function SetChequeNetwork(loopListResult) {
+    if (loopListResult && loopListResult.NodeList) {
+        var senderList = GetGridSenderList();
+
+        var nodeList = loopListResult.NodeList;
+        var nodeArr = new Array();
+
+        for (var i = 0; i < nodeList.length; i++)
+        {
+            var node = { id: nodeList[i], label: nodeList[i] };
+            nodeArr.push(node);
+        }
+
+        var edges = new Array();
+
+        for (var i = 0; i < senderList.length; i++)
+        {
+            var edge = { from: senderList[i].Sender, to: senderList[i].Receiver };
+            edges.push(edge);
+        }
+
+
+        // create a network
+        var container = document.getElementById('ChequeNetwork');
+
+        // provide the data in the vis format
+        var data = {
+            nodes: nodeArr,
+            edges: edges
+        };
+        var options = {};
+
+        // initialize your network!
+        var network = new vis.Network(container, data, options);
+    }
 }
