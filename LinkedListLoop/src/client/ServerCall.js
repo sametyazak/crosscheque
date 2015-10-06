@@ -1,44 +1,51 @@
 ﻿var ServerCall = {
     Execute: function (functionName, requestMessage, successCallBack, failCallBack) {
-        var postData = JSON.stringify({
-            ServerSideMethod: functionName,
-            Data: requestMessage ? JSON.stringify(requestMessage) : "{}"
-        });
+        try
+        {
+            var postData = JSON.stringify({
+                ServerSideMethod: functionName,
+                Data: requestMessage ? JSON.stringify(requestMessage) : "{}"
+            });
 
-        var queryData = 'queryData=' + postData;
-        var url = $('#RootAddress').val() + '/ServerCall.ashx';
+            var queryData = 'queryData=' + postData;
+            var url = $('#RootAddress').val() + '/ServerCall.ashx';
 
-        ServerCall.ShowOverlay();
+            ServerCall.ShowOverlay();
 
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: queryData,
-            responseType: "json",
-            success: function (transport, json) {
-                var resultObject = JSON.parse(transport);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: queryData,
+                responseType: "json",
+                success: function (transport, json) {
+                    var resultObject = JSON.parse(transport);
 
-                if (resultObject) {
-                    var returnObject = resultObject && resultObject.ResultObject ? resultObject.ResultObject : resultObject;
+                    if (resultObject) {
+                        var returnObject = resultObject && resultObject.ResultObject ? resultObject.ResultObject : resultObject;
 
-                    if (resultObject && resultObject.IsError) {
-                        ServerCall.DynamicCall(failCallBack, resultObject.ErrorMessage);
+                        if (resultObject && resultObject.IsError) {
+                            ServerCall.DynamicCall(failCallBack, resultObject.ErrorMessage);
+                        }
+                        else if (ServerCall.IsFunction(successCallBack)) {
+                            ServerCall.DynamicCall(successCallBack, [returnObject]);
+                        }
                     }
-                    else if (ServerCall.IsFunction(successCallBack)) {
-                        ServerCall.DynamicCall(successCallBack, [returnObject]);
+
+                    ServerCall.HideOverlay();
+                },
+                fail: function (transport) {
+                    if (ServerCall.IsFunction(failCallBack)) {
+                        ServerCall.DynamicCall(failCallBack, []);
                     }
-                }
 
-                ServerCall.HideOverlay();
-            },
-            fail: function (transport) {
-                if (ServerCall.IsFunction(failCallBack)) {
-                    ServerCall.DynamicCall(failCallBack, []);
+                    ServerCall.HideOverlay();
                 }
-
-                ServerCall.HideOverlay();
-            }
-        });
+            });
+        }
+        catch (ex)
+        {
+            ServerCall.HideOverlay();
+        }
     },
 
     IsFunction: function (functionToCheck) {

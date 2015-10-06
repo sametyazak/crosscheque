@@ -8,10 +8,7 @@
     <style type="text/css">
         #ChequeNetwork {
             border: 1px solid lightgray;
-
-            margin: auto;
-            width: 80%;
-            height:600px;
+            height: 600px;
         }
     </style>
 </asp:Content>
@@ -21,16 +18,32 @@
 
         $(document).ready(function () {
             InitializePage();
+            ToogleLeftMenu();
         });
 
     </script>
     <%--<div id="header">
         <h1>Cross Cheque</h1>
     </div>--%>
-    <div style="height:120px;width:100%">
-        
+
+
+    <div class="grid grid--has-2">
+        <div class="grid-item">
+            <div class="article-loop">
+                <div id="SenderList"></div>
+
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <div class="article-loop">
+                <div id="LoopList"></div>
+            </div>
+        </div>
+
     </div>
-    <div>
+
+    <%--<div>
         <div id="Main">
             <div id="LoopAction">
                 <div id="DataArea">
@@ -40,12 +53,8 @@
                         </div>
                         <div class="ColumnBody">
                             <div style="float: left; padding-top: 13px; padding-bottom: 10px;">
-                                <input id="FileUpload" type="file" />
                             </div>
                             <div style="float: left; padding-bottom: 10px; padding-left: 15px;">
-                                <div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 100px; height: 30px;" view_id="$Upload">
-                                    <button id="btnUploadFile" class="webixtype_base" type="button">Yükle</button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,15 +65,9 @@
                             </div>
                             <div class="ColumnBody">
                                 <div style="float: left; height: 48px;">
-                                    <div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 150px; height: 30px;" view_id="$DownloadSample">
-                                        <button id="btnDowloadSampleData" class="webixtype_base" type="button">Örnek Veri İndir</button>
-                                    </div>
                                 </div>
 
                                 <div style="float: right; padding-left: 15px;">
-                                    <div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 150px; height: 30px;" view_id="$LoadSample">
-                                        <button id="btnLoadSample" class="webixtype_base" type="button">Örnek Veri Yükle</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -72,24 +75,21 @@
                 </div>
 
                 <div id="ProcessArea">
-                    <div class="webix_view webix_control webix_el_button" view_id="$Process" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 175px; height: 30px;">
-                        <div class="webix_el_box" style="width: 175px; height: 30px">
-                            <button type="button" class="webixtype_base" id="btnProcessSenderList">Process</button>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div id="GridArea">
-                <div id="SenderList"></div>
-
-                <div id="LoopList"></div>
             </div>
 
         </div>
-    </div>
+    </div>--%>
 
-    <div id="ChequeNetwork">
-
+    <div>
+        <div class="ColumnHeader">
+            Gönderen/Alıcı Ağı
+        </div>
+        <div id="ChequeNetwork">
+        </div>
     </div>
 
 </asp:Content>

@@ -52,10 +52,16 @@ namespace LinkedListLoop.src.server
             return result;
         }
 
-        public static string GetSampleDownloadLink()
+        public static byte[] GetSampleDownloadLink()
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\cc_sample_data.csv");
-            return path;
+            //string domain = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, "");
+            //string path = string.Concat(domain, @"/Data/");
+            //System.Net.WebClient client = new System.Net.WebClient();
+            //client.DownloadFile(Common.GetSampleDataFilePath(), @"c:\temp\cc_sample_data.csv");
+
+            return File.ReadAllBytes(Common.GetSampleDataFilePath());
+
+            //return path;
         }
 
         public static string GetSampleDataText()
@@ -91,18 +97,21 @@ namespace LinkedListLoop.src.server
         public static List<LoopResult> GetTreeLoops(List<ChequeInfo> chequeList)
         {
             List<LoopResult> loops = new List<LoopResult>();
-            SenderReceiverList list = GetSenderReceiverList(chequeList);
 
-            if (list.RootList.Count == 0)
+            if (chequeList != null && chequeList.Count > 0)
             {
-                throw new Exception("no root found");
-            }
+                SenderReceiverList list = GetSenderReceiverList(chequeList);
 
-            foreach (string root in list.RootList)
-            {
-                loops.AddRange(GetTreeLoopsRecursive(root, new List<string>(), list.TotalList));
-            }
+                if (list.RootList.Count == 0)
+                {
+                    throw new Exception("no root found");
+                }
 
+                foreach (string root in list.RootList)
+                {
+                    loops.AddRange(GetTreeLoopsRecursive(root, new List<string>(), list.TotalList));
+                }
+            }
             return loops;
         }
 

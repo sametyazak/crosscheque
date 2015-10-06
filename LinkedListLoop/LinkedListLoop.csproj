@@ -64,7 +64,9 @@
     <Content Include="app\ChequeLoop.aspx" />
     <Content Include="app\ChequeLoop.js" />
     <Content Include="app\ChequeLoop_20150928.js" />
+    <Content Include="Default2.aspx" />
     <Content Include="design\CrossCheque.css" />
+    <Content Include="design\LeftMenu.css" />
     <Content Include="design\TopMenu.css" />
     <Content Include="external_reference\FileHelpers.dll" />
     <Content Include="external_reference\FileHelpers.ExcelNPOIStorage.dll" />
@@ -77,7 +79,10 @@
     <Content Include="external_reference\Newtonsoft.Json.xml" />
     <Content Include="FileDownload.aspx" />
     <Content Include="img\Cheque.PNG" />
+    <Content Include="img\header-icons.svg" />
     <Content Include="img\logo.png" />
+    <Content Include="img\logo2.png" />
+    <Content Include="img\play.png" />
     <Content Include="lib\jquery\jquery-2.1.4.min.js" />
     <Content Include="lib\vis\img\network\acceptDeleteIcon.png" />
     <Content Include="lib\vis\img\network\addNodeIcon.png" />
@@ -114,6 +119,13 @@
     </Compile>
     <Compile Include="CrossCheque.Master.designer.cs">
       <DependentUpon>CrossCheque.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Default2.aspx.cs">
+      <DependentUpon>Default2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default2.aspx.designer.cs">
+      <DependentUpon>Default2.aspx</DependentUpon>
     </Compile>
     <Compile Include="ServerCall.ashx.cs">
       <DependentUpon>ServerCall.ashx</DependentUpon>

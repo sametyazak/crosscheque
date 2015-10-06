@@ -105,7 +105,7 @@ function SetGridData(senderList) {
             container: "SenderList",
             type: "clear",
             rows: [
-              { view: "template", css: "headline", height: 5 },
+              { view: "template", css: "headline", height: 0 },
               grid,
               {
                   type: "clear", height: 46, paddingY: 8, cols: [

@@ -86,18 +86,18 @@
     width:100%;	 	 
 }
 
-#SenderList {
+/*#SenderList {
     float:left;
     width:50%;
-}
+}*/
 #LoopAction {
     width:100%;	 	 
     padding-top:15px;
 }
-#LoopList {
+/*#LoopList {
     width:50%;
     float:right; 	 
-}
+}*/
 
 #GridArea {
     padding-top:10px;

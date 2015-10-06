@@ -6,6 +6,12 @@
 <head runat="server">
     <title>Cross Cheque</title>
 
+    <meta name="description" content="Cross Cheque">
+    <meta name="author" content="Samet Yazak">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <link href="lib/webix/webix.css" rel="stylesheet" />
     <link href="lib/webix/webix2.css" rel="stylesheet" />
     <script src='<%= Page.ResolveUrl("~/lib/webix/webix.js") %>'></script>
@@ -13,6 +19,76 @@
     <script src='<%= Page.ResolveUrl("~/src/client/ServerCall.js") %>'></script>
     <link href="design/CrossCheque.css" rel="stylesheet" />
     <link href="design/TopMenu.css" rel="stylesheet" />
+    <link href="design/LeftMenu.css" rel="stylesheet" />
+
+    <script type="text/javascript" charset="utf-8">
+
+        function ToogleLeftMenu() {
+            $('#LeftMenuContainer').toggle();
+            SetMenuLayout();
+        }
+
+        function SetMenuLayout() {
+            if ($('#LeftMenuContainer').is(':visible')) {
+                $('#FooterMenu').show();
+                $('#PrimaryContent').addClass('content-primary-push');
+            }
+            else {
+                $('#FooterMenu').hide();
+                $('#PrimaryContent').removeClass('content-primary-push');
+            }
+        }
+
+        $(document).ready(function () {
+            $(document).mouseup(function (e) {
+                var sampleDataVisible = $('#SampleDataContainer').is(':visible');
+                var uploadVisible = $('#UploadDataContainer').is(':visible');
+
+                if (sampleDataVisible)
+                {
+                    HideIfOutside('SampleDataContainer', e);
+                }
+
+                if (uploadVisible) {
+                    HideIfOutside('UploadDataContainer', e);
+                }
+            });
+
+            $('#TopMenuSample').click(
+                function (e) {
+                    var offset = $(this).offset();
+                    ToggleChildDiv('SampleDataContainer', offset);
+                }
+            );
+
+            $('#TopMenuUpload').click(
+                function (e) {
+                    var offset = $(this).offset();
+                    ToggleChildDiv('UploadDataContainer', offset);
+                }
+            );
+        });
+
+        function ToggleChildDiv(id, offset) {
+            var selector = '#' + id;
+
+            $(selector).toggle();
+            event.stopPropagation();
+
+            $(selector).css({ top: offset.top + 32, left: offset.left - 50, position: 'absolute' });
+        }
+
+        function HideIfOutside(containerId, e)
+        {
+            var container = $("#" + containerId);
+
+            if (!container.is(e.target)
+                && container.has(e.target).length === 0)
+            {
+                container.hide();
+            }
+        }
+    </script>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -25,28 +101,93 @@
                 Yükleniyor...
             </div>
         </div>
-        
-        <div class="TopMenuContainer">
-            <div class="Logo">
-                <img src="<%= Page.ResolveUrl("~/img/logo2.png") %>" style="height:110px;" />
+
+        <a href="#" id="toggleLeftMenu" onclick="ToogleLeftMenu();" class="toggle-left-menu"><span></span></a>
+        <div class="top-menu-primary" id="TopMenu">
+
+            <div id="SampleDataContainer" class="sample-data-container">
+                
+                <div class="article-loop">
+                    <%--<div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 150px; height: 30px;" view_id="$DownloadSample">
+                        <button id="btnDowloadSampleData" class="webixtype_base" type="button">Örnek Veri İndir</button>
+                    </div>--%>
+                    <div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 150px; height: 30px;" view_id="$LoadSample">
+                        <button id="btnLoadSample" class="webixtype_base" type="button">Örnek Veri Yükle</button>
+                    </div>
+
+                </div>
             </div>
-            <div class="RightMenu" style="width: 100%; max-width: 512px;">
-                <ul id="TopMenu">
-                    <li class="switch">
-                        <label onclick="" for="css3menu-switcher"></label>
+
+            <div id="UploadDataContainer" class="sample-data-container">
+                <div class="article-loop">
+                    <input id="FileUpload" type="file" />
+                    <div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 100px; height: 30px;" view_id="$Upload">
+                        <button id="btnUploadFile" class="webixtype_base" type="button">Yükle</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-secondary-2">
+                <ul class="nav-secondary__items">
+                    <li class="nav-secondary__item process">
+                        <div class="top-menu-process" id="btnProcessSenderList">
+                        </div>
+                    </li>
+                    <li class="nav-secondary__item">
+                        <div class="top-menu-sample" id="TopMenuSample">
+                            Örnek Veri
+                        </div>
+                    </li>
+                    <li class="nav-secondary__item" id="TopMenuUpload">
+                        <div class="top-menu-upload">Dosya Yükle</div>
+
                     </li>
 
-                    <li class="topmenuitem"> <a href="~/Default.aspx" runat="server" style="height: 13px; line-height: 13px;">Ana Sayfa</a></li>
-                    <li class="topmenuitem"><a href="~/app/ChequeLoop.aspx" runat="server" style="height: 13px; line-height: 13px;">Demo</a></li>
-                    <li class="topmenuitem"><a href="https://github.com/sametyazak/crosscheque" style="height: 13px; line-height: 13px;">İndir</a></li>
                 </ul>
+            </div>
+        </div>
+        <div class="content-secondary" id="LeftMenuContainer">
+            <div class="header-primary">
+                <a href="~/Default.aspx" runat="server" class="header-primary__logo">
+                    <img src='<%= Page.ResolveUrl("~/img/logo_cc.png") %>' alt="Cross Cheque" />
+                </a>
+                <!-- /header-primary__lgoo -->
+                <div id="nav-primary" class="header-primary__navigation nav-primary">
+                    <ul class="nav-primary__items">
+                        <li class="nav-primary__item">
+                            <a id="A2" href="~/Default.aspx" runat="server" class="nav-primary__link">Ana Sayfa</a>
+                        </li>
+                        <li class="nav-primary__item">
+                            <a id="A1" href="~/app/ChequeLoop.aspx" runat="server" class="nav-primary__link">Demo</a>
+                        </li>
+                        <li class="nav-primary__item">
+                            <a href="https://github.com/sametyazak/crosscheque" class="nav-primary__link" style="">Github</a>
+                        </li>
+                    </ul>
+                </div>
+                <a href="#" id="nav-primary__toggle" class="nav-primary__toggle"><span></span></a>
+            </div>
+        </div>
+
+        <div class="content-primary" id="PrimaryContent">
+            <div class="content-primary__container">
+                <asp:ContentPlaceHolder ID="CrossChequeBody" runat="server">
+                </asp:ContentPlaceHolder>
 
             </div>
         </div>
 
-        <div>
-            <asp:ContentPlaceHolder ID="CrossChequeBody" runat="server">
-            </asp:ContentPlaceHolder>
+        <div class="footer-primary" id="FooterMenu">
+            <div class="footer-primary__nav nav-secondary">
+                <ul class="nav-secondary__items">
+                    <li class="nav-secondary__item ">
+                        <a href="#" class="nav-secondary__link">Powered By</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="position: relative">
         </div>
     </form>
 </body>

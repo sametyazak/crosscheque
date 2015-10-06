@@ -3,17 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
-            //var testObj = new Object();
-            //testObj.asf = '1';
-            //testObj.fgsd = '2';
-
-            //var sc = ServerCall.Execute('GetSampleData', testObj);
+            $('#TopMenu').hide();
+            SetMenuLayout();
         });
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="CrossChequeBody" runat="server">
     <div class="MainPageBody">
-        <div class="MainPageImage">
+        <div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/X3HeZCur-hI" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 </asp:Content>
