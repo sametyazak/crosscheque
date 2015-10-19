@@ -1113,16 +1113,102 @@ code[class*=language-], pre[class*=language-] {
 
 .sample-data-container {
     display:none;
-    width:400px;
     position:fixed;
     top:0;
     left:0;
     z-index:30;
-    background-color:#27ae60;
     text-align:center;
-    padding:15px;
 }
 
 .sample-data-container.active {
     display:block;
+}
+.menu-circle {
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 20px;
+
+    width: 50px;
+    height: 50px;
+    background: #27ae60;
+    color:#ffffff;
+    cursor:pointer;
+    vertical-align:middle;
+    padding-top:13px;
+}
+
+.nav-next {
+    width: 50px;
+    display: inline-block;
+    margin-right: 20px;
+    cursor:pointer;
+}
+
+.nav-prev {
+    width: 50px;
+    display: inline-block;
+    margin-right: 20px;
+    cursor:pointer;
+}
+
+.sliding-content {
+    width:100%;
+    margin-top:30px;
+}
+
+.tooltip, .arrow:after {
+  background: black;
+}
+
+.tooltip {
+  /* opacity: 0; */
+  padding: 10px 20px;
+  color: white;
+  border-radius: 20px;
+  margin-top: 20px;
+  text-align: center;
+  font: bold 14px "Helvetica Neue", Sans-Serif;
+  font-stretch: condensed;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 0 0 7px black;
+}
+.arrow {
+  width: 70px;
+  height: 16px;
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  margin-left: -35px;
+  top: -5px;
+}
+.arrow:after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 4px;
+  width: 25px;
+  height: 25px;
+  -webkit-box-shadow: 6px 5px 9px -9px black,
+                      5px 6px 9px -9px black;
+  -moz-box-shadow: 6px 5px 9px -9px black,
+                   5px 6px 9px -9px black;
+  box-shadow: 6px 5px 9px -9px black,
+              5px 6px 9px -9px black;
+  -webkit-transform: rotate(45deg);
+  -moz-transform:    rotate(45deg);
+  -ms-transform:     rotate(45deg);
+  -o-transform:      rotate(45deg);
+}
+.tooltip.active {
+  opacity: 1;
+  margin-top: 5px;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition:    all 0.2s ease;
+  -ms-transition:     all 0.2s ease;
+  -o-transition:      all 0.2s ease;
+}
+.tooltip.out {
+  opacity: 0;
+  margin-top: -20px;
 }

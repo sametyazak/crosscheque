@@ -1220,8 +1220,6 @@ label.webix_required:after{padding-left:4px;content:"*";color:red}
 .portlet_markerbottom{height:50%;top:50%}
 .portlet_markerleft{width:50%}
 .portlet_markerright{width:50%;left:50%}
-@font-face{font-family:'PT Sans';font-style:normal;font-weight:400;src:local('PT Sans'),local('PTSans-Regular'),url(fonts/PTS-webfont.eot) format('embedded-opentype'),url(fonts/PTS-webfont.woff) format('woff'),url(fonts/PTS-webfont.ttf) format('truetype')}
-@font-face{font-family:'PT Sans';font-style:normal;font-weight:700;src:local('PT Sans Bold'),local('PTSans-Bold'),url(fonts/PTS-bold.eot) format('embedded-opentype'),url(fonts/PTS-bold.woff) format('woff'),url(fonts/PTS-bold.ttf) format('truetype')}
 .mainFont{font-family:'PT Sans',Tahoma;font-size:15px;color:#666}
 .webix_layout_toolbar.webix_toolbar{color:#fff;font-size:18px;background:#3498db}
 .webix_layout_toolbar.webix_toolbar .webix_el_button,.webix_layout_toolbar.webix_toolbar .webix_el_label,.webix_layout_toolbar.webix_toolbar .webix_inp_label{color:#fff}

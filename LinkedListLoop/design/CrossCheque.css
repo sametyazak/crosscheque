@@ -1,5 +1,6 @@
 ﻿.MainPageBody {
-    
+    text-align: center;
+    vertical-align: middle;
 }
 
 .MainPageImage {
@@ -42,6 +43,8 @@
      padding:15px;
      text-align:center;
 }
+
+
 
 
 

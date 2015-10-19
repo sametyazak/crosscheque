@@ -84,6 +84,7 @@
     <Content Include="img\logo2.png" />
     <Content Include="img\play.png" />
     <Content Include="lib\jquery\jquery-2.1.4.min.js" />
+    <Content Include="lib\jquery\jquery-ui.js" />
     <Content Include="lib\vis\img\network\acceptDeleteIcon.png" />
     <Content Include="lib\vis\img\network\addNodeIcon.png" />
     <Content Include="lib\vis\img\network\backIcon.png" />
@@ -108,6 +109,8 @@
     <Content Include="lib\webix\webix.css" />
     <Content Include="lib\webix\webix.js" />
     <Content Include="lib\webix\webix_debug.js" />
+    <Content Include="src\client\Content.js" />
+    <Content Include="src\client\Core.js" />
     <Content Include="src\client\ServerCall.js" />
     <Content Include="Web.config" />
     <Content Include="Default.aspx" />
@@ -165,6 +168,8 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="src\server\entities\NetworkItem.cs" />
+    <Compile Include="src\server\entities\NodeItem.cs" />
     <Compile Include="src\server\entities\SenderReceiverList.cs" />
     <Compile Include="src\server\MethodFinder.cs" />
   </ItemGroup>

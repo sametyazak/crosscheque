@@ -10,6 +10,8 @@ namespace LinkedListLoop.src.server.entities
     {
         public List<LoopResult> LoopList { get; set; }
 
-        public List<string> NodeList { get; set; }
+        public List<NetworkItem> NetworkList { get; set; }
+
+        public List<NodeItem> NodeList { get; set; }
     }
 }

@@ -25,24 +25,21 @@
     <%--<div id="header">
         <h1>Cross Cheque</h1>
     </div>--%>
-
-
-    <div class="grid grid--has-2">
-        <div class="grid-item">
-            <div class="article-loop">
-                <div id="SenderList"></div>
-
-            </div>
+    <div class="MainPageBody">
+        <div id="SlidingContainer">
         </div>
 
-        <div class="grid-item">
-            <div class="article-loop">
-                <div id="LoopList"></div>
+        <div id="SenderList"></div>
+        <div id="LoopList"></div>
+
+        <div id="NetworkContainer">
+            <div class="ColumnHeader">
+                Gönderen/Alıcı Ağı
+            </div>
+            <div id="ChequeNetwork">
             </div>
         </div>
-
     </div>
-
     <%--<div>
         <div id="Main">
             <div id="LoopAction">
@@ -83,13 +80,4 @@
 
         </div>
     </div>--%>
-
-    <div>
-        <div class="ColumnHeader">
-            Gönderen/Alıcı Ağı
-        </div>
-        <div id="ChequeNetwork">
-        </div>
-    </div>
-
 </asp:Content>

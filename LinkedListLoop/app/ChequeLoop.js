@@ -1,5 +1,7 @@
-﻿function InitializePage() {
+﻿var loopResult = new Object();
 
+function InitializePage() {
+    InitSlidingMenu();
     //GetSenderList();
     CreateSenderList();
     //GetSampleData();
@@ -69,14 +71,15 @@ function SetGridData(senderList) {
         var grid = {
             view: "datatable",
             id: "dt",
-            scrollY: false,
+            scrollY: true,
             select: "row",
             navigation: true,
             yCount: 10,
             editable: true,
             math: true,
-            autoheight: true,
-            autowidth: true,
+            autoheight: false,
+            height:800,
+            autowidth: false,
             columns: [
                 { id: "Sender", editor: "text", header: "Gönderen", width: 100 },
                 { id: "Receiver", editor: "text", header: "Alıcı", width: 100 },
@@ -86,17 +89,16 @@ function SetGridData(senderList) {
             editaction: "dblclick",
             pager: "bottomPager",
             ready: function () {
-                webix.UIManager.setFocus(this);
-                this.select("4");
+                //InitSlidingMenu();
             },
             data: senderList,
 
             on: {
                 onBeforeLoad: function () {
-                    this.showOverlay("Loading...");
+
                 },
                 onAfterLoad: function () {
-                    this.hideOverlay();
+
                 }
             }
         };
@@ -144,12 +146,14 @@ function SetPageEvents() {
 
     $('#btnLoadSample').click(
         function () {
+            $('#SampleDataContainer').hide();
             GetSampleData();
         }
     );
 
     $('#btnUploadFile').click(
         function () {
+            $('#UploadDataContainer').hide();
             LoadFile();
         }
     );
@@ -209,11 +213,12 @@ function SetLoopResults(loopListResult) {
                 container: "LoopList",
                 view: "datatable",
                 columns: [
-                    { id: "LoopHtmlText", header: "İşlem Döngüsü", width: 500 }
+                    { id: "LoopHtmlText", header: "İşlem Döngüsü", width: 700 }
                 ],
                 autoheight: true,
                 autowidth: true,
                 editable: false,
+                fixedRowHeight:false,
 
                 on: {
                     onBeforeLoad: function () {
@@ -232,7 +237,7 @@ function SetLoopResults(loopListResult) {
             });
     }
 
-    SetChequeNetwork(loopListResult);
+    loopResult = loopListResult;
 
 }
 
@@ -274,24 +279,60 @@ function GetSampleDownloadLink() {
     ServerCall.Execute('GetSampleDownloadLink', null, null, null);
 }
 
-function SetChequeNetwork(loopListResult) {
-    if (loopListResult && loopListResult.NodeList) {
-        var senderList = GetGridSenderList();
+function GetNetworkOptions()
+{
+    var options = {
+        
+        nodes: {
+            shape: 'dot',
+            scaling:{
+                label: {
+                    min:8,
+                    max:20
+                }
+            },
+            shadow: {
+                "enabled": true
+            }
+        },
 
+        "edges": {
+            "arrows": {
+                "to": {
+                    "enabled": true
+                }
+            },
+            "scaling": {
+                "min": 2,
+                "max": 10
+            },
+            "shadow": {
+                "enabled": true
+            }
+        }
+    }
+
+    return options;
+}
+
+function SetChequeNetwork() {
+    var loopListResult = loopResult;
+
+    if (loopListResult && loopListResult.NodeList) {
         var nodeList = loopListResult.NodeList;
+        var networkList = loopListResult.NetworkList;
+
         var nodeArr = new Array();
 
-        for (var i = 0; i < nodeList.length; i++)
-        {
-            var node = { id: nodeList[i], label: nodeList[i] };
+        for (var i = 0; i < nodeList.length; i++) {
+            var node = { id: nodeList[i].Id, label: nodeList[i].Name, value: nodeList[i].Value, title: nodeList[i].Text};
             nodeArr.push(node);
         }
 
         var edges = new Array();
 
-        for (var i = 0; i < senderList.length; i++)
-        {
-            var edge = { from: senderList[i].Sender, to: senderList[i].Receiver };
+        for (var i = 0; i < networkList.length; i++) {
+            var edge = { from: networkList[i].Sender, to: networkList[i].Receiver, value: networkList[i].NodeValue, title: networkList[i].EdgeTitle };
             edges.push(edge);
         }
 
@@ -304,9 +345,46 @@ function SetChequeNetwork(loopListResult) {
             nodes: nodeArr,
             edges: edges
         };
-        var options = {};
+        var options = GetNetworkOptions();
 
         // initialize your network!
         var network = new vis.Network(container, data, options);
+    }
+}
+
+function InitSlidingMenu() {
+    var slidingItems = new Array();
+
+    var senderList = { MenuId: 'SenderList', OnStart: null, OnComplete: null };
+    var loopList = { MenuId: 'LoopList', OnStart: ProcessSenderList, OnComplete: null };
+    var networkContainer = { MenuId: 'NetworkContainer', OnStart: SetChequeNetwork, OnComplete: null };
+
+    slidingItems.push(senderList);
+    slidingItems.push(loopList);
+    slidingItems.push(networkContainer);
+
+    var conf = {
+        MenuItems: slidingItems,
+        MainContainer: 'SlidingContainer',
+        OnNext: NavigateNext,
+        OnPrev: NavigatePrev,
+        OnNavigate: NavigateTo,
+        MenuWidth: '100%',
+        SideNavSpeed: 1000,
+        TopNavSpeed: 500
+    };
+
+    Content.CreateSlidingMenu(conf);
+
+    function NavigateNext() {
+        Content.NavigateNext();
+    }
+
+    function NavigatePrev() {
+        Content.NavigatePrev();
+    }
+
+    function NavigateTo(i) {
+        Content.NavigateTo(i);
     }
 }

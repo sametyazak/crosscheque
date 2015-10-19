@@ -83,12 +83,33 @@ namespace LinkedListLoop.src.server
                     loops = loops.Where(a => a.HasLoop).ToList();
                 }
 
-                List<string> nodeList = new List<string>();
-                nodeList = senderList.Select(a => a.Sender).ToList();
-                nodeList.AddRange(senderList.Select(a => a.Receiver).ToList());
+                List<NetworkItem> networkList = senderList
+                    .GroupBy(l => new { l.Sender, l.Receiver })
+                    .Select(cl => new NetworkItem
+                    {
+                        Sender = cl.First().Sender,
+                        Receiver = cl.First().Receiver,
+                        NodeValue = cl.Count(),
+                        EdgeTitle = string.Format("{0} {1}", cl.Count(), "İşlem")
+                    }).ToList();
+
+                List<string> nodeTotalList = new List<string>();
+                nodeTotalList.AddRange(senderList.Select(a=>a.Sender).ToList());
+                nodeTotalList.AddRange(senderList.Select(a=>a.Receiver).ToList());
+
+                List<NodeItem> nodeList = nodeTotalList
+                    .GroupBy(a => a)
+                    .Select(s => new NodeItem
+                    {
+                        Id = s.First(),
+                        Name = s.First(),
+                        Value = s.Count(),
+                        Text = string.Format("{0} {1}", s.Count(), "İşlem")
+                    }).ToList();
 
                 result.LoopList = loops;
-                result.NodeList = nodeList.Distinct().ToList();
+                result.NetworkList = networkList;
+                result.NodeList = nodeList;
             }
 
             return result;
@@ -170,7 +191,25 @@ namespace LinkedListLoop.src.server
 
                         if (!allReceiverExists)
                         {
+                            if (!string.IsNullOrEmpty(toBeRemovedRoot))
+                            {
+                                rootList.Remove(toBeRemovedRoot);
+                                toBeRemovedRoot = string.Empty;
+                            }
+
                             rootList.Add(cheque.Sender);
+
+                            if (receiverExists)
+                            {
+                                if (rootList.Count > 1)
+                                {
+                                    rootList.Remove(cheque.Receiver);
+                                }
+                                else
+                                {
+                                    toBeRemovedRoot = cheque.Receiver;
+                                }
+                            }
                         }
                     }
 
@@ -181,23 +220,6 @@ namespace LinkedListLoop.src.server
                         receiverList.Add(cheque.Receiver);
                     }
 
-                    if (receiverExists)
-                    {
-                        if (!string.IsNullOrEmpty(toBeRemovedRoot))
-                        {
-                            rootList.Remove(toBeRemovedRoot);
-                            toBeRemovedRoot = string.Empty;
-                        }
-
-                        if (rootList.Count > 1)
-                        {
-                            rootList.Remove(cheque.Receiver);
-                        }
-                        else
-                        {
-                            toBeRemovedRoot = cheque.Receiver;
-                        }
-                    }
                 }
             }
 
@@ -264,6 +286,6 @@ namespace LinkedListLoop.src.server
                 return string.Empty;
             }
         }
-                
+
     }
 }
