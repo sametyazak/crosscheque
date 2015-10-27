@@ -1,5 +1,5 @@
 # crosscheque
-**CrossCheque** is a web application that finds loops and visializes sender/receiver network.
+**CrossCheque** is a web application that finds loops and visualizes sender/receiver network.
 Feel free to [visit](http://www.crosscheques.com/)
 
 Version | Date | Explanation
