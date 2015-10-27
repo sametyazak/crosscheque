@@ -25,59 +25,21 @@
     <%--<div id="header">
         <h1>Cross Cheque</h1>
     </div>--%>
-    <div class="MainPageBody">
-        <div id="SlidingContainer">
-        </div>
-
-        <div id="SenderList"></div>
-        <div id="LoopList"></div>
-
-        <div id="NetworkContainer">
-            <div class="ColumnHeader">
-                Gönderen/Alıcı Ağı
+    <div class="content-primary__container">
+        <div class="MainPageBody">
+            <div id="SlidingContainer">
             </div>
-            <div id="ChequeNetwork">
+
+            <div id="SenderList"></div>
+            <div id="LoopList"></div>
+
+            <div id="NetworkContainer">
+                <div class="ColumnHeader">
+                    Gönderen/Alıcı Ağı
+                </div>
+                <div id="ChequeNetwork">
+                </div>
             </div>
         </div>
     </div>
-    <%--<div>
-        <div id="Main">
-            <div id="LoopAction">
-                <div id="DataArea">
-                    <div id="UploadArea">
-                        <div class="ColumnHeader">
-                            Dosya Yükle?
-                        </div>
-                        <div class="ColumnBody">
-                            <div style="float: left; padding-top: 13px; padding-bottom: 10px;">
-                            </div>
-                            <div style="float: left; padding-bottom: 10px; padding-left: 15px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div id="SampleArea">
-                        <div>
-                            <div class="ColumnHeader">
-                                Örnek Veri İle İşlem?
-                            </div>
-                            <div class="ColumnBody">
-                                <div style="float: left; height: 48px;">
-                                </div>
-
-                                <div style="float: right; padding-left: 15px;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="ProcessArea">
-                    
-                </div>
-            </div>
-            <div id="GridArea">
-            </div>
-
-        </div>
-    </div>--%>
 </asp:Content>

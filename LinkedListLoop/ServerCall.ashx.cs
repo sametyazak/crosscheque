@@ -1,4 +1,7 @@
-﻿using LinkedListLoop.src.server;
+﻿using LinkedListLoop.entities;
+using LinkedListLoop.src.client;
+using LinkedListLoop.src.server;
+using LinkedListLoop.src.server.entities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,6 +20,8 @@ namespace LinkedListLoop
         {
             try
             {
+                string callReference = Guid.NewGuid().ToString();
+
                 string queryData = context.Request.Form["queryData"];
 
                 if (string.IsNullOrEmpty(queryData))
@@ -26,16 +31,41 @@ namespace LinkedListLoop
                 else
                 {
                     var queryInfo = JsonConvert.DeserializeObject<QueryInfo>(queryData);
+
+                    if (queryInfo.LogRequest)
+                    {
+                        LogManager.InsertServerCallLog(queryData, callReference, LogDirection.ServerRequest);
+                    }
+
                     var result = MethodFinder.CallAjaxMethod(queryInfo.ServerSideMethod, queryInfo.Data);
 
-                    //context.Response.ContentType = "text/html";
+                    if (queryInfo.LogRequest)
+                    {
+                        LogManager.InsertServerCallLog(result, callReference, LogDirection.ServerResponse);
+                    }
+
                     context.Response.Write(JsonConvert.SerializeObject(result));
                 }
             }
             catch (Exception ex)
             {
-                context.Response.StatusCode = 500;
-                context.Response.Write(ex.Message);
+                LogManager.InsertExceptionLog(ex);
+
+                AjaxResult errorResult = new AjaxResult();
+                errorResult.IsError = true;
+
+                if (ex != null)
+                {
+                    errorResult.ErrorMessage = ex.Message;
+                    errorResult.ErrorDetail = ex.InnerException != null ? ex.InnerException.Message : ex.ToString();
+                }
+                else
+                {
+                    errorResult.ErrorMessage = "Hata oldu ama yakalayamadık!";
+                    errorResult.ErrorDetail = string.Empty;
+                }
+
+                context.Response.Write(JsonConvert.SerializeObject(errorResult));
             }
         }
 
@@ -52,6 +82,8 @@ namespace LinkedListLoop
             public string ServerSideMethod { get; set; }
 
             public object Data { get; set; }
+
+            public bool LogRequest { get; set; }
         }
     }
 }

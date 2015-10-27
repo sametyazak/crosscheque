@@ -1,4 +1,5 @@
 ﻿using LinkedListLoop.entities;
+using LinkedListLoop.src.client;
 using LinkedListLoop.src.server.entities;
 using Newtonsoft.Json;
 using System;
@@ -6,10 +7,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
+using System.Xml;
+using System.Xml.Linq;
+using WebMatrix.WebData;
 
 namespace LinkedListLoop.src.server
 {
-    public class AjaxMethods
+    public class AjaxMethods : System.Web.UI.Page
     {
         public static AjaxResult GetSampleData()
         {
@@ -94,8 +99,8 @@ namespace LinkedListLoop.src.server
                     }).ToList();
 
                 List<string> nodeTotalList = new List<string>();
-                nodeTotalList.AddRange(senderList.Select(a=>a.Sender).ToList());
-                nodeTotalList.AddRange(senderList.Select(a=>a.Receiver).ToList());
+                nodeTotalList.AddRange(senderList.Select(a => a.Sender).ToList());
+                nodeTotalList.AddRange(senderList.Select(a => a.Receiver).ToList());
 
                 List<NodeItem> nodeList = nodeTotalList
                     .GroupBy(a => a)
@@ -145,7 +150,8 @@ namespace LinkedListLoop.src.server
             if (subPath.Contains(rootNode))
             {
                 subPath.Add(rootNode);
-                loops.Add(GetLoopResult(subPath, rootNode));
+                LoopResult loopRes = GetLoopResult(subPath, rootNode);
+                loops.Add(loopRes);
                 return loops;
             }
 
@@ -287,5 +293,129 @@ namespace LinkedListLoop.src.server
             }
         }
 
+        public static void InsertUiErrorLog(string message)
+        {
+            LogManager.InsertUiErrorLog(message);
+        }
+
+        public static List<Log> GetLogList()
+        {
+            List<Log> logList = new List<Log>();
+
+            string logPath = Common.GetLogFileName();
+
+            if (File.Exists(logPath))
+            {
+                string logText = string.Empty;
+
+                using (StreamReader reader = new StreamReader(logPath))
+                {
+                    logText = string.Format("{0}{1}{2}", "<LogEntries>", reader.ReadToEnd(), "</LogEntries>");
+                }
+
+                XDocument xmlFile = XDocument.Parse(logText);
+
+                var data = from item in xmlFile.Descendants("LogEntry")
+                    select new Log
+                    {
+                        ComputerName = Common.GetXmlElementValue(item, "ComputerName"),
+                        Date = DateTime.Parse(Common.GetXmlElementValue(item, "Date")),
+                        Level = Common.GetXmlElementValue(item, "Level"),
+                        Direction = Common.GetXmlElementValue(item, "Direction").ToEnum<LogDirection>(LogDirection.None),
+                        IP = string.Empty,
+                        Message = Common.GetXmlElementValue(item, "Request"),
+                        Reference = Common.GetXmlElementValue(item, "Reference"),
+                        Url = Common.GetXmlElementValue(item, "Url")
+                        
+                    };
+
+                logList.AddRange(data.ToList());
+                
+            }
+            else
+            {
+                throw new Exception(string.Format("{0}-{0}", "log file not found", logPath));
+            }
+
+            return logList;
+        }
+
+        public static string RegisterUser(RegisterModel registerData)
+        {
+            UserManager.Register(registerData);
+
+            return "Default.aspx".ToAbsoluteUrl();
+        }
+
+        public static string LoginUser(LoginModel loginData)
+        {
+            //string returnUrl = HttpContext.Current.ApplicationInstance.Session.Count > 0 ? HttpContext.Current.ApplicationInstance.Session["ReturnUrl"].ToString() : string.Empty;
+            UserManager.Login(loginData);
+
+            return string.Format("{0}{1}", GlobalConfiguration.Host, HttpUtility.ParseQueryString(HttpContext.Current.Request.UrlReferrer.Query)["returnUrl"]);
+        }
+
+        public static string LogoutUser()
+        {
+            UserManager.LogOut();
+            return "app/user/Login.aspx".ToAbsoluteUrl();
+        }
+
+        public static List<MenuItem> GetMenuList()
+        {
+            return GlobalConfiguration.MenuList;
+        }
+
+        public static string[] GetAllRoles()
+        {
+            return UserManager.GetAllRoles();
+        }
+
+        public static List<string> GetAllUsers()
+        {
+            return UserManager.GetAllUsers();
+        }
+
+        public static string[] GetUserRoles(string userName)
+        {
+            return UserManager.GetUserRoles(userName);
+        }
+
+        public static AjaxResult SaveUser(SaveRequest userData)
+        {
+            string userName = userData.UserName;
+
+            foreach (var role in userData.Roles)
+            {
+                if (!string.IsNullOrEmpty(role.Value) && role.Value.Equals("0"))
+                {
+                    UserManager.DeleteUserRole(userName, role.Key);
+                }
+                else if (!string.IsNullOrEmpty(role.Value) && role.Value.Equals("1"))
+                {
+                    UserManager.AddUserRole(userName, role.Key);
+                }
+                else
+                {
+                    throw new Exception(string.Format("Geçeriz yetki değeri : {0}, {1}", role.Key, role.Value));
+                }
+            }
+
+            return new AjaxResult() { IsError = false };
+        }
+
+        public static AjaxResult ChangePassword(LocalPasswordModel passwordData)
+        {
+            UserManager.Manage(passwordData, WebSecurity.CurrentUserName);
+
+            return new AjaxResult() { IsError = false };
+        }
+
+        public static string GuestLogin()
+        {
+            LoginModel loginInfo = Common.GetGuestInfo();
+
+            return LoginUser(loginInfo);
+        }
     }
 }

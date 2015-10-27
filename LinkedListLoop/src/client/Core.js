@@ -8,8 +8,7 @@
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     },
 
-    IsUndefined: function (value)
-    {
+    IsUndefined: function (value) {
         return (typeof value === "undefined");
     },
 
@@ -32,5 +31,14 @@
         if (overlayEl) {
             overlayEl.hide();
         }
+    },
+
+    Redirect: function (location) {
+        window.location.href = location;
+    },
+
+    IsVisible: function (id) {
+        var item = $('#' + id);
+        return item && item.is(':visible');
     }
 }

@@ -20,6 +20,8 @@
     <script src='<%= Page.ResolveUrl("~/src/client/ServerCall.js") %>'></script>
     <script src='<%= Page.ResolveUrl("~/src/client/Content.js") %>'></script>
     <script src='<%= Page.ResolveUrl("~/src/client/Core.js") %>'></script>
+    <script src='<%= Page.ResolveUrl("~/src/client/Menu.js") %>'></script>
+    <script src='<%= Page.ResolveUrl("~/CrossCheque.js") %>'></script>
     <link href="design/CrossCheque.css" rel="stylesheet" />
     <link href="design/TopMenu.css" rel="stylesheet" />
     <link href="design/LeftMenu.css" rel="stylesheet" />
@@ -35,7 +37,7 @@
         }
 
         function SetMenuLayout() {
-            if ($('#LeftMenuContainer').is(':visible')) {
+            if (Core.IsVisible('LeftMenuContainer')) {
                 $('#FooterMenu').show();
                 $('#PrimaryContent').addClass('content-primary-push');
             }
@@ -46,9 +48,11 @@
         }
 
         $(document).ready(function () {
+            InitMaster();
+
             $(document).mouseup(function (e) {
-                var sampleDataVisible = $('#SampleDataContainer').is(':visible');
-                var uploadVisible = $('#UploadDataContainer').is(':visible');
+                var sampleDataVisible = Core.IsVisible('SampleDataContainer');
+                var uploadVisible = Core.IsVisible('UploadDataContainer');
 
                 if (sampleDataVisible) {
                     HideIfOutside('SampleDataContainer', e);
@@ -72,6 +76,13 @@
                     ToggleChildDiv('UploadDataContainer', offset);
                 }
             );
+
+            $('#UserLogout').click(
+                function (e) {
+                    ServerCall.Execute({ functionName: 'LogoutUser', requestMessage: null, successCallBack: AfterLogout, failCallBack: null });
+                }
+
+            );
         });
 
         function ToggleChildDiv(id, offset) {
@@ -81,9 +92,8 @@
             event.stopPropagation();
 
             var divLeft = $(selector).width();
-            
-            if (divLeft && divLeft > 0)
-            {
+
+            if (divLeft && divLeft > 0) {
                 divLeft = divLeft / 2;
             }
 
@@ -137,23 +147,35 @@
                 </div>
             </div>
 
-            <div class="nav-secondary-2">
-                <ul class="nav-secondary__items">
-                    <li class="nav-secondary__item process">
-                        <div class="top-menu-process" id="btnProcessSenderList">
-                        </div>
-                    </li>
-                    <li class="nav-secondary__item">
-                        <div class="top-menu-sample" id="TopMenuSample">
-                            Örnek Veri
-                        </div>
-                    </li>
-                    <li class="nav-secondary__item" id="TopMenuUpload">
-                        <div class="top-menu-upload">Dosya Yükle</div>
+            <div class="grid">
+                <div class="nav-secondary-2">
+                    <ul class="nav-secondary__items" style="display:none;" id="TopNavUl">
+                        <li class="nav-secondary__item process">
+                            <div class="top-menu-process" id="btnProcessSenderList">
+                            </div>
+                        </li>
+                        <li class="nav-secondary__item">
+                            <div class="top-menu-sample" id="TopMenuSample">
+                                Örnek Veri
+                            </div>
+                        </li>
+                        <li class="nav-secondary__item" id="TopMenuUpload">
+                            <div class="top-menu-upload">Dosya Yükle</div>
 
-                    </li>
+                        </li>
 
-                </ul>
+                    </ul>
+                </div>
+                <div class="user-panel" id="UserPanel">
+                    <div>
+                        <%= UserName %>,
+                        <br />
+                        Hoşgeldiniz
+                    </div>
+                </div>
+                <div class="user-logout" id="UserLogout">
+                    
+                </div>
             </div>
         </div>
         <div class="content-secondary" id="LeftMenuContainer">
@@ -163,28 +185,15 @@
                 </a>
                 <!-- /header-primary__lgoo -->
                 <div id="nav-primary" class="header-primary__navigation nav-primary">
-                    <ul class="nav-primary__items">
-                        <li class="nav-primary__item">
-                            <a id="A2" href="~/Default.aspx" runat="server" class="nav-primary__link">Ana Sayfa</a>
-                        </li>
-                        <li class="nav-primary__item">
-                            <a id="A1" href="~/app/ChequeLoop.aspx" runat="server" class="nav-primary__link">Demo</a>
-                        </li>
-                        <li class="nav-primary__item">
-                            <a href="https://github.com/sametyazak/crosscheque" class="nav-primary__link" style="">Github</a>
-                        </li>
-                    </ul>
+                   
                 </div>
                 <a href="#" id="nav-primary__toggle" class="nav-primary__toggle"><span></span></a>
             </div>
         </div>
 
-        <div class="content-primary" id="PrimaryContent">
-            <div class="content-primary__container">
-                <asp:ContentPlaceHolder ID="CrossChequeBody" runat="server">
-                </asp:ContentPlaceHolder>
-
-            </div>
+        <div class="content-primary content-primary__container" id="PrimaryContent">
+            <asp:ContentPlaceHolder ID="CrossChequeBody" runat="server">
+            </asp:ContentPlaceHolder>
         </div>
 
         <div class="footer-primary" id="FooterMenu">

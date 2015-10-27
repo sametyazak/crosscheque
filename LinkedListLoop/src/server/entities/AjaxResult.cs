@@ -12,5 +12,7 @@ namespace LinkedListLoop.entities
         public string ErrorMessage { get; set; }
 
         public object ResultObject { get; set; }
+
+        public string ErrorDetail { get; set; }
     }
 }

@@ -1,0 +1,1 @@
+<LogEntry><Message>application start</Message></LogEntry>

@@ -25,12 +25,12 @@
         this.CreateSlidingMenuItems(mainContainer, conf);
 
         this.BindEvents(conf);
-
+        this.SetNavigationTitle();
     },
 
     CreateSlidingNavigation: function (mainContainer) {
         mainContainer.append('<div id="' + this.ContainerId + '_SlidingNavigation">');
-        mainContainer.append('<div class="nav-prev" id="' + this.ContainerId + '_Prev">Prev</div>');
+        mainContainer.append('<div class="nav-prev" id="' + this.ContainerId + '_Prev"><span class="side-nav-title" id="' + this.ContainerId + '_Prev_Title"></span> <- Prev</div>');
 
         for (var i = 0; i < this.MenuItems.length; i++) {
             var menuItem = this.MenuItems[i];
@@ -44,7 +44,7 @@
             }
         }
 
-        mainContainer.append('<div class="nav-next" id="' + this.ContainerId + '_Next">Next</div>');
+        mainContainer.append('<div class="nav-next" id="' + this.ContainerId + '_Next">Next -> <span class="side-nav-title" id="' + this.ContainerId + '_Next_Title"></span></div>');
         mainContainer.append('</div>');
     },
 
@@ -139,9 +139,9 @@
 
             currentDiv.hide("slide", { direction: "right" }, speed);
             prevDiv.delay(speed).show("slide", { direction: "left" }, speed, onrealComplete);
-            
-            this.SetTopMenuNavItemOpacity(this.CurrentMenuItem, --this.CurrentMenuItem);
 
+            this.SetTopMenuNavItemOpacity(this.CurrentMenuItem, --this.CurrentMenuItem);
+            this.SetNavigationTitle();
         }
     },
 
@@ -157,8 +157,7 @@
 
             Core.ShowOverlay();
 
-            if (!onComplete && Core.IsFunction(this.MenuItems[this.CurrentMenuItem + 1].OnStart))
-            {
+            if (!onComplete && Core.IsFunction(this.MenuItems[this.CurrentMenuItem + 1].OnStart)) {
                 onComplete = this.MenuItems[this.CurrentMenuItem + 1].OnStart;
             }
 
@@ -174,6 +173,7 @@
             nextDiv.delay(speed).show("slide", { direction: "right" }, speed, onrealComplete);
 
             this.SetTopMenuNavItemOpacity(this.CurrentMenuItem, ++this.CurrentMenuItem);
+            this.SetNavigationTitle();
         }
     },
 
@@ -185,12 +185,10 @@
             this.ClickedMenuIndex = menuIndex;
         }
 
-        if (menuIndex < this.CurrentMenuItem)
-        {
+        if (menuIndex < this.CurrentMenuItem) {
             this.NavigatePrev(this.Configuration.OnNavigate, this.Configuration.TopNavSpeed);
         }
-        else if (menuIndex > this.CurrentMenuItem)
-        {
+        else if (menuIndex > this.CurrentMenuItem) {
             this.NavigateNext(this.Configuration.OnNavigate, this.Configuration.TopNavSpeed);
         }
     },
@@ -207,5 +205,48 @@
 
     GetNavigationItem: function (i) {
         return $('#' + this.ContainerId + '_TopNav' + i)
+    },
+
+    GetPrevNavigationTitleObj: function () {
+        return $('#' + this.ContainerId + '_Prev_Title')
+    },
+
+    GetNextNavigationTitleObj: function () {
+        return $('#' + this.ContainerId + '_Next_Title')
+    },
+
+    SetNavigationTitle: function ()
+    {
+        this.NormalizeCurrentMenuItem();
+
+        var prevText = '';
+        var nextText = '';
+
+        var prevObj = this.GetPrevNavigationTitleObj();
+        var nextObj = this.GetNextNavigationTitleObj();
+
+        if (this.CurrentMenuItem != 0)
+        {
+            prevText = this.MenuItems[this.CurrentMenuItem - 1].Title;
+        }
+
+        if (this.CurrentMenuItem < (this.MenuItems.length - 1))
+        {
+            nextText = this.MenuItems[this.CurrentMenuItem + 1].Title;
+        }
+
+        prevObj.html(prevText);
+        nextObj.html(nextText);
+    },
+
+    NormalizeCurrentMenuItem: function ()
+    {
+        if (this.CurrentMenuItem < 0) {
+            this.CurrentMenuItem = 0;
+        }
+
+        if (this.CurrentMenuItem > (this.MenuItems.length - 1)) {
+            this.CurrentMenuItem = this.MenuItems.length - 1;
+        }
     }
 }

@@ -38,11 +38,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetOpenAuth.AspNet">
+      <HintPath>..\DotNetOpenAuth.AspNet.4.0.3.12153\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>..\DotNetOpenAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth">
+      <HintPath>..\DotNetOpenAuth.OAuth.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
+      <HintPath>..\DotNetOpenAuth.OAuth.Consumer.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId">
+      <HintPath>..\DotNetOpenAuth.OpenId.Core.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
+      <HintPath>..\DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>external_reference\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -59,11 +85,33 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.30506.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\ChequeLoop.aspx" />
     <Content Include="app\ChequeLoop.js" />
     <Content Include="app\ChequeLoop_20150928.js" />
+    <Content Include="app\Unauthorized.aspx" />
+    <Content Include="app\user\ChangePassword.aspx" />
+    <Content Include="app\user\ChangePassword.js" />
+    <Content Include="app\Log.aspx" />
+    <Content Include="app\Log.js" />
+    <Content Include="app\user\Login.aspx" />
+    <Content Include="app\user\Login.js" />
+    <Content Include="app\user\ManageUser.aspx" />
+    <Content Include="app\user\ManageUser.js" />
+    <Content Include="app\user\Register.aspx" />
+    <Content Include="app\user\Register.js" />
+    <Content Include="CrossCheque.js" />
+    <Content Include="data\definitions\guest.txt" />
+    <Content Include="data\definitions\LeftMenu.txt" />
     <Content Include="Default2.aspx" />
     <Content Include="design\CrossCheque.css" />
     <Content Include="design\LeftMenu.css" />
@@ -78,10 +126,12 @@
     <Content Include="external_reference\Newtonsoft.Json.pdb" />
     <Content Include="external_reference\Newtonsoft.Json.xml" />
     <Content Include="FileDownload.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="img\Cheque.PNG" />
     <Content Include="img\header-icons.svg" />
     <Content Include="img\logo.png" />
     <Content Include="img\logo2.png" />
+    <Content Include="img\logout.png" />
     <Content Include="img\play.png" />
     <Content Include="lib\jquery\jquery-2.1.4.min.js" />
     <Content Include="lib\jquery\jquery-ui.js" />
@@ -105,17 +155,62 @@
     <Content Include="lib\vis\vis.js" />
     <Content Include="lib\vis\vis.min.css" />
     <Content Include="lib\vis\vis.min.js" />
+    <Content Include="lib\webix\fonts\font-license.txt" />
+    <Content Include="lib\webix\fonts\fontawesome-webfont.svg" />
     <Content Include="lib\webix\webix2.css" />
     <Content Include="lib\webix\webix.css" />
     <Content Include="lib\webix\webix.js" />
     <Content Include="lib\webix\webix_debug.js" />
     <Content Include="src\client\Content.js" />
     <Content Include="src\client\Core.js" />
+    <Content Include="src\client\Menu.js" />
     <Content Include="src\client\ServerCall.js" />
     <Content Include="Web.config" />
     <Content Include="Default.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="app\Unauthorized.aspx.cs">
+      <DependentUpon>Unauthorized.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\Unauthorized.aspx.designer.cs">
+      <DependentUpon>Unauthorized.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="app\user\ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\user\ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="app\Log.aspx.cs">
+      <DependentUpon>Log.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\Log.aspx.designer.cs">
+      <DependentUpon>Log.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="app\user\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\user\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="app\user\ManageUser.aspx.cs">
+      <DependentUpon>ManageUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\user\ManageUser.aspx.designer.cs">
+      <DependentUpon>ManageUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="app\user\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\user\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CrossCheque.Master.cs">
       <DependentUpon>CrossCheque.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -130,10 +225,20 @@
     <Compile Include="Default2.aspx.designer.cs">
       <DependentUpon>Default2.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="ServerCall.ashx.cs">
       <DependentUpon>ServerCall.ashx</DependentUpon>
     </Compile>
-    <Compile Include="src\server\AjaxMethods.cs" />
+    <Compile Include="src\server\entities\LogDirection.cs" />
+    <Compile Include="src\server\AjaxMethods.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\server\BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\server\entities\AccessLevel.cs" />
     <Compile Include="src\server\entities\AjaxResult.cs" />
     <Compile Include="src\server\entities\ChequeCustomer.cs" />
     <Compile Include="src\server\entities\ChequeInfo.cs" />
@@ -145,6 +250,8 @@
       <DependentUpon>ChequeLoop.aspx</DependentUpon>
     </Compile>
     <Compile Include="src\server\entities\ChequeTree.cs" />
+    <Compile Include="src\server\entities\GlobalConfiguration.cs" />
+    <Compile Include="src\server\entities\Log.cs" />
     <Compile Include="src\server\entities\LoopProcessResult.cs" />
     <Compile Include="src\server\entities\LoopResult.cs" />
     <Compile Include="FileDownload.aspx.cs">
@@ -168,10 +275,16 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="src\server\entities\MenuItem.cs" />
     <Compile Include="src\server\entities\NetworkItem.cs" />
     <Compile Include="src\server\entities\NodeItem.cs" />
+    <Compile Include="src\server\entities\SaveRequest.cs" />
     <Compile Include="src\server\entities\SenderReceiverList.cs" />
+    <Compile Include="src\server\entities\User.cs" />
+    <Compile Include="src\server\entities\UsersContext.cs" />
+    <Compile Include="src\server\LogManager.cs" />
     <Compile Include="src\server\MethodFinder.cs" />
+    <Compile Include="src\server\UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\cc_sample_data.csv" />
@@ -179,6 +292,19 @@
     <Content Include="CrossCheque.Master" />
     <Content Include="ServerCall.ashx" />
     <Content Include="lib\vis\vis.map" />
+    <Content Include="packages.config" />
+    <Content Include="log4net.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="lib\webix\fonts\fontawesome-webfont.eot" />
+    <Content Include="lib\webix\fonts\fontawesome-webfont.ttf" />
+    <Content Include="lib\webix\fonts\fontawesome-webfont.woff" />
+    <Content Include="lib\webix\fonts\PTS-bold.eot" />
+    <Content Include="lib\webix\fonts\PTS-bold.ttf" />
+    <Content Include="lib\webix\fonts\PTS-bold.woff" />
+    <Content Include="lib\webix\fonts\PTS-webfont.eot" />
+    <Content Include="lib\webix\fonts\PTS-webfont.ttf" />
+    <Content Include="lib\webix\fonts\PTS-webfont.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -187,6 +313,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="data\tmp\" />
     <Folder Include="lib\jqwidgets\" />
   </ItemGroup>

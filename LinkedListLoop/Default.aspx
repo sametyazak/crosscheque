@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
-            $('#TopMenu').hide();
+            //$('#TopMenu').hide();
             SetMenuLayout();
 
             //var slidingItems = new Array();
@@ -40,12 +40,13 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="CrossChequeBody" runat="server">
-    <div class="MainPageBody">
-        <div style="">
-            <iframe width="760" height="440" src="https://www.youtube.com/embed/X3HeZCur-hI" frameborder="0" allowfullscreen></iframe>
-        </div>
+    
+        <div>
+            <div style="">
+                <iframe width="560" height="300" src="https://www.youtube.com/embed/X3HeZCur-hI" frameborder="0" allowfullscreen></iframe>
+            </div>
 
-        <%--<div id="SlidingContainer">
+            <%--<div id="SlidingContainer">
             
         </div>
         <div id="Menu1" style="background-color:blue;height:100px;">
@@ -60,5 +61,5 @@
         <div id="Menu4" style="background-color:brown;height:100px;">
             Menu3
         </div>--%>
-    </div>
+        </div>
 </asp:Content>

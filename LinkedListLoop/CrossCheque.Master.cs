@@ -1,9 +1,11 @@
-﻿using System;
+﻿using LinkedListLoop.src.server.entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebMatrix.WebData;
 
 namespace LinkedListLoop
 {
@@ -11,7 +13,10 @@ namespace LinkedListLoop
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RootAddress.Value = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, "");
+            RootAddress.Value = GlobalConfiguration.Host;
         }
+
+        public string UserName { get { return WebSecurity.CurrentUserName; } }
+
     }
 }

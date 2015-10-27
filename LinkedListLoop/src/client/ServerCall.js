@@ -1,16 +1,17 @@
 ﻿var ServerCall = {
-    Execute: function (functionName, requestMessage, successCallBack, failCallBack) {
+    Execute: function (options) {
         try
         {
             var postData = JSON.stringify({
-                ServerSideMethod: functionName,
-                Data: requestMessage ? JSON.stringify(requestMessage) : "{}"
+                ServerSideMethod: options.functionName,
+                Data: options.requestMessage ? JSON.stringify(options.requestMessage) : "{}",
+                LogRequest: Core.IsUndefined(options.LogRequest) ? true : options.LogRequest
             });
 
             var queryData = 'queryData=' + postData;
             var url = $('#RootAddress').val() + '/ServerCall.ashx';
 
-            ServerCall.ShowOverlay();
+            Core.ShowOverlay();
 
             $.ajax({
                 type: "POST",
@@ -24,56 +25,32 @@
                         var returnObject = resultObject && resultObject.ResultObject ? resultObject.ResultObject : resultObject;
 
                         if (resultObject && resultObject.IsError) {
-                            ServerCall.DynamicCall(failCallBack, resultObject.ErrorMessage);
+                            if (Core.IsFunction(options.failCallBack)) {
+                                Core.DynamicCall(options.failCallBack, resultObject.ErrorMessage);
+                            }
+                            else {
+                                webix.message({ type: "error", text: resultObject.ErrorDetail });
+                            }
                         }
-                        else if (ServerCall.IsFunction(successCallBack)) {
-                            ServerCall.DynamicCall(successCallBack, [returnObject]);
+                        else if (Core.IsFunction(options.successCallBack)) {
+                            Core.DynamicCall(options.successCallBack, [returnObject]);
                         }
                     }
 
-                    ServerCall.HideOverlay();
+                    Core.HideOverlay();
                 },
                 fail: function (transport) {
-                    if (ServerCall.IsFunction(failCallBack)) {
-                        ServerCall.DynamicCall(failCallBack, []);
+                    if (Core.IsFunction(options.failCallBack)) {
+                        Core.DynamicCall(options.failCallBack, []);
                     }
 
-                    ServerCall.HideOverlay();
+                    Core.HideOverlay();
                 }
             });
         }
         catch (ex)
         {
-            ServerCall.HideOverlay();
-        }
-    },
-
-    IsFunction: function (functionToCheck) {
-        var getType = {};
-        return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-    },
-
-    DynamicCall: function (func, args) {
-        var myObject;
-        myObject = func.apply(myObject, args);
-    },
-
-    ShowOverlay: function ()
-    {
-        var overlayEl = $('#MasterOverlay');
-
-        if (overlayEl)
-        {
-            overlayEl.show();
-        }
-    },
-
-    HideOverlay: function ()
-    {
-        var overlayEl = $('#MasterOverlay');
-
-        if (overlayEl) {
-            overlayEl.hide();
+            Core.HideOverlay();
         }
     }
 };

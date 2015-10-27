@@ -7,10 +7,12 @@ function InitializePage() {
     //GetSampleData();
     CreateLoopList();
     SetPageEvents();
+
+    $('#TopNavUl').show();
 }
 
 function GetSenderList() {
-    ServerCall.Execute('GetChequeListJson', null, SetGridData, null);
+    ServerCall.Execute({ functionName: 'GetChequeListJson', requestMessage: null, successCallBack: SetGridData, failCallBack: null});
 }
 
 function CreateSenderList() {
@@ -184,7 +186,7 @@ function GetGridSenderList() {
 }
 
 function GetProcessResults(senderList) {
-    ServerCall.Execute('GetFilteredLoops', senderList, SetLoopResults, null);
+    ServerCall.Execute({ functionName: 'GetFilteredLoops', requestMessage: senderList, successCallBack: SetLoopResults, failCallBack: null });
 }
 
 function SetLoopResults(loopListResult) {
@@ -242,7 +244,7 @@ function SetLoopResults(loopListResult) {
 }
 
 function GetSampleData() {
-    ServerCall.Execute('GetSampleData', null, SetGridData, null);
+    ServerCall.Execute({ functionName: 'GetSampleData', requestMessage: null, successCallBack: SetGridData, failCallBack: null });
 }
 
 function LoadFile() {
@@ -272,11 +274,11 @@ function LoadFile() {
 }
 
 function SetFileRecords(path) {
-    ServerCall.Execute('GetFileRecords', path, SetGridData, null);
+    ServerCall.Execute({ functionName: 'GetFileRecords', requestMessage: path, successCallBack: SetGridData, failCallBack: null });
 }
 
 function GetSampleDownloadLink() {
-    ServerCall.Execute('GetSampleDownloadLink', null, null, null);
+    ServerCall.Execute({ functionName: 'GetSampleDownloadLink', requestMessage: null, successCallBack: null, failCallBack: null });
 }
 
 function GetNetworkOptions()
@@ -355,9 +357,9 @@ function SetChequeNetwork() {
 function InitSlidingMenu() {
     var slidingItems = new Array();
 
-    var senderList = { MenuId: 'SenderList', OnStart: null, OnComplete: null };
-    var loopList = { MenuId: 'LoopList', OnStart: ProcessSenderList, OnComplete: null };
-    var networkContainer = { MenuId: 'NetworkContainer', OnStart: SetChequeNetwork, OnComplete: null };
+    var senderList = { MenuId: 'SenderList', OnStart: null, OnComplete: null, Title: 'Gönderen Alıcı Listesi' };
+    var loopList = { MenuId: 'LoopList', OnStart: ProcessSenderList, OnComplete: null, Title: 'İşlem Döngüsü' };
+    var networkContainer = { MenuId: 'NetworkContainer', OnStart: SetChequeNetwork, OnComplete: null, Title: 'Gönderen Alıcı Ağı' };
 
     slidingItems.push(senderList);
     slidingItems.push(loopList);
