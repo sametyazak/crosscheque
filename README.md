@@ -4,7 +4,7 @@ Feel free to [visit](http://www.crosscheques.com/)
 
 Version | Date | Explanation
 ------------ | ------------- | -------------
-2.0 | 2015-10-27 | user login/management and log monitoring, page authorization added
+2.0 | 2015-10-27 | user login/management, log monitoring, page authorization added
 1.4 | 2015-10-20 | sliding content added
 1.3 | 2015-10-07 | new page design
 1.2 | 2015-10-01 | sender/receiver network added
