@@ -12,4 +12,4 @@ Version | Date | Explanation
 1.1 | 2015-09-28 | enhance framework, create ajax server calls
 1.0 | 2015-09-08 | Go live with basic functionality, finding loops
 
-Current site verison *2.0*
+Current site verison *2.1*
