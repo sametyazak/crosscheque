@@ -21,7 +21,12 @@
     <script src='<%= Page.ResolveUrl("~/src/client/Content.js") %>'></script>
     <script src='<%= Page.ResolveUrl("~/src/client/Core.js") %>'></script>
     <script src='<%= Page.ResolveUrl("~/src/client/Menu.js") %>'></script>
+    <script src='<%= Page.ResolveUrl("~/src/client/TopMenu.js") %>'></script>
+    <script src='<%= Page.ResolveUrl("~/src/client/Global.js") %>'></script>
+    <script src='<%= Page.ResolveUrl("~/src/client/Template.js") %>'></script>
     <script src='<%= Page.ResolveUrl("~/CrossCheque.js") %>'></script>
+    <script src='<%= Page.ResolveUrl("~/src/client/lang/" + CurrentCulture.Value + ".js") %>'></script>
+
     <link href="design/CrossCheque.css" rel="stylesheet" />
     <link href="design/TopMenu.css" rel="stylesheet" />
     <link href="design/LeftMenu.css" rel="stylesheet" />
@@ -31,21 +36,7 @@
 
     <script type="text/javascript" charset="utf-8">
 
-        function ToogleLeftMenu() {
-            $('#LeftMenuContainer').toggle();
-            SetMenuLayout();
-        }
-
-        function SetMenuLayout() {
-            if (Core.IsVisible('LeftMenuContainer')) {
-                $('#FooterMenu').show();
-                $('#PrimaryContent').addClass('content-primary-push');
-            }
-            else {
-                $('#FooterMenu').hide();
-                $('#PrimaryContent').removeClass('content-primary-push');
-            }
-        }
+        
 
         $(document).ready(function () {
             InitMaster();
@@ -62,20 +53,6 @@
                     HideIfOutside('UploadDataContainer', e);
                 }
             });
-
-            $('#TopMenuSample').click(
-                function (e) {
-                    var offset = $(this).offset();
-                    ToggleChildDiv('SampleDataContainer', offset);
-                }
-            );
-
-            $('#TopMenuUpload').click(
-                function (e) {
-                    var offset = $(this).offset();
-                    ToggleChildDiv('UploadDataContainer', offset);
-                }
-            );
 
             $('#UserLogout').click(
                 function (e) {
@@ -110,19 +87,31 @@
         }
     </script>
 
+    <style>
+        #LeftMenuContainer {
+            display:none;
+        }
+
+        #FooterMenu {
+            display:none;
+        }
+    </style>
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="DefaultForm" runat="server">
         <asp:HiddenField ID="RootAddress" runat="server" />
+        <asp:HiddenField ID="CurrentCulture" runat="server" />
+
         <div class="overlay" id="MasterOverlay">
-            <div>
+            <div id="MasterOverlayText">
                 Yükleniyor...
             </div>
         </div>
 
-        <a href="#" id="toggleLeftMenu" onclick="ToogleLeftMenu();" class="toggle-left-menu"><span></span></a>
+        <a href="#" id="toggleLeftMenu" class="toggle-left-menu"><span></span></a>
         <div class="top-menu-primary" id="TopMenu">
 
 
@@ -131,7 +120,7 @@
                     <div class="arrow"></div>
 
                     <div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 150px; height: 30px;" view_id="$LoadSample">
-                        <button id="btnLoadSample" class="webixtype_base" type="button">Örnek Veri Yükle</button>
+                        <button id="btnLoadSample" class="webixtype_base" type="button"></button>
                     </div>
 
                 </div>
@@ -142,35 +131,22 @@
                     <div class="arrow"></div>
                     <input id="FileUpload" type="file" />
                     <div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 100px; height: 30px;" view_id="$Upload">
-                        <button id="btnUploadFile" class="webixtype_base" type="button">Yükle</button>
+                        <button id="btnUploadFile" class="webixtype_base" type="button"></button>
                     </div>
                 </div>
             </div>
 
             <div class="grid">
-                <div class="nav-secondary-2">
-                    <ul class="nav-secondary__items" style="display:none;" id="TopNavUl">
-                        <li class="nav-secondary__item process">
-                            <div class="top-menu-process" id="btnProcessSenderList">
-                            </div>
-                        </li>
-                        <li class="nav-secondary__item">
-                            <div class="top-menu-sample" id="TopMenuSample">
-                                Örnek Veri
-                            </div>
-                        </li>
-                        <li class="nav-secondary__item" id="TopMenuUpload">
-                            <div class="top-menu-upload">Dosya Yükle</div>
+                <div class="nav-secondary-2" id="TopNavUlContainer">
+                </div>
+                <div id="LanguageContainer" class="main-language-container">
 
-                        </li>
-
-                    </ul>
                 </div>
                 <div class="user-panel" id="UserPanel">
                     <div>
                         <%= UserName %>,
                         <br />
-                        Hoşgeldiniz
+                        <span id="WelcomeText"></span>
                     </div>
                 </div>
                 <div class="user-logout" id="UserLogout">
@@ -200,7 +176,7 @@
             <div class="footer-primary__nav nav-secondary">
                 <ul class="nav-secondary__items">
                     <li class="nav-secondary__item ">
-                        <a href="#" class="nav-secondary__link">Powered By</a>
+                        <a href="#" class="nav-secondary__link">Powered By LP</a>
                     </li>
                 </ul>
             </div>

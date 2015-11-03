@@ -14,8 +14,11 @@
     <script src='<%= Page.ResolveUrl("~/src/client/ServerCall.js") %>'></script>
     <script src='<%= Page.ResolveUrl("~/src/client/Content.js") %>'></script>
     <script src='<%= Page.ResolveUrl("~/src/client/Core.js") %>'></script>
+    <script src='<%= Page.ResolveUrl("~/src/client/Template.js") %>'></script>
+    <script src='<%= Page.ResolveUrl("~/src/client/Global.js") %>'></script>
 
     <script src='<%= Page.ResolveUrl("~/app/user/Register.js") %>'></script>
+    <script src='<%= Page.ResolveUrl("~/src/client/lang/" + CurrentCulture.Value + ".js") %>'></script>
 
     <link href="../../design/CrossCheque.css" rel="stylesheet" />
     <link href="../../design/TopMenu.css" rel="stylesheet" />
@@ -30,6 +33,11 @@
 <body>
     <form id="form1" runat="server">
         <asp:HiddenField ID="RootAddress" runat="server" />
+        <asp:HiddenField ID="CurrentCulture" runat="server" />
+
+        <div id="LanguageContainer" style="position:absolute; top:10px; right:10px;">
+
+        </div>
 
         <div class="login-container">
             <div id="LoginArea"></div>

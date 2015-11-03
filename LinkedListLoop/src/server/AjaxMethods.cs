@@ -95,7 +95,7 @@ namespace LinkedListLoop.src.server
                         Sender = cl.First().Sender,
                         Receiver = cl.First().Receiver,
                         NodeValue = cl.Count(),
-                        EdgeTitle = string.Format("{0} {1}", cl.Count(), "İşlem")
+                        EdgeTitle = string.Format("{0} {1}", cl.Count(), ResourceHelper.GetString("Transaction"))
                     }).ToList();
 
                 List<string> nodeTotalList = new List<string>();
@@ -109,7 +109,7 @@ namespace LinkedListLoop.src.server
                         Id = s.First(),
                         Name = s.First(),
                         Value = s.Count(),
-                        Text = string.Format("{0} {1}", s.Count(), "İşlem")
+                        Text = string.Format("{0} {1}", s.Count(), ResourceHelper.GetString("Transaction"))
                     }).ToList();
 
                 result.LoopList = loops;
@@ -130,7 +130,7 @@ namespace LinkedListLoop.src.server
 
                 if (list.RootList.Count == 0)
                 {
-                    throw new Exception("no root found");
+                    throw new Exception(ResourceHelper.GetString("NoRootFound"));
                 }
 
                 foreach (string root in list.RootList)
@@ -247,7 +247,7 @@ namespace LinkedListLoop.src.server
 
                 if (start < 0 || end < 0 || end <= start)
                 {
-                    throw new Exception("invalid loop index(es)");
+                    throw new Exception(ResourceHelper.GetString("InvalidLoopIndex"));
                 }
 
                 result.Loop = path.GetRange(start, (end - start) + 1);
@@ -279,12 +279,12 @@ namespace LinkedListLoop.src.server
                     }
                     else
                     {
-                        return "2:Döngü bulunamadı";
+                        return ResourceHelper.GetString("NoLoopFound");
                     }
                 }
                 else
                 {
-                    return "1:Döngü Eşleşmesi bulunamadı";
+                    return ResourceHelper.GetString("NoLoopMatching");
                 }
             }
             else
@@ -334,7 +334,7 @@ namespace LinkedListLoop.src.server
             }
             else
             {
-                throw new Exception(string.Format("{0}-{0}", "log file not found", logPath));
+                throw new Exception(string.Format(ResourceHelper.GetString("LogFileNotFoundFormat"), logPath));
             }
 
             return logList;
@@ -397,7 +397,7 @@ namespace LinkedListLoop.src.server
                 }
                 else
                 {
-                    throw new Exception(string.Format("Geçeriz yetki değeri : {0}, {1}", role.Key, role.Value));
+                    throw new Exception(string.Format(ResourceHelper.GetString("IncorrectAuthFormat"), role.Key, role.Value));
                 }
             }
 
@@ -416,6 +416,19 @@ namespace LinkedListLoop.src.server
             LoginModel loginInfo = Common.GetGuestInfo();
 
             return LoginUser(loginInfo);
+        }
+
+        public static AjaxResult ChangeCurrentCulture(string culture)
+        {
+            GlobalConfiguration.CurrentCulture = new System.Globalization.CultureInfo(culture);
+            GlobalConfiguration.MenuList = Common.GetMenuItems();
+
+            return new AjaxResult() { IsError = false };
+        }
+
+        public static List<Language> GetAvailableLanguages()
+        {
+            return Common.GetAvailableLanguages();
         }
     }
 }

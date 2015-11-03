@@ -54,7 +54,7 @@ namespace LinkedListLoop.src.server
                         }
                         else
                         {
-                            throw new Exception("DeserializeObject method not found");
+                            throw new Exception(ResourceHelper.GetString("DeserializationMethodNotFound"));
                         }
                     }
 
@@ -62,12 +62,12 @@ namespace LinkedListLoop.src.server
                 }
                 else
                 {
-                    throw new Exception("Method is not found");
+                    throw new Exception(ResourceHelper.GetString("MethodNotFoundReflection"));
                 }
             }
             else
             {
-                throw new Exception("type is not found");
+                throw new Exception(ResourceHelper.GetString("TypeNotFoundReflection"));
             }
         }
     }

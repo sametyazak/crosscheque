@@ -3,13 +3,14 @@
     BindEvents();
 }
 
-function InitializeComponents() {
+function InitializeLoginForm() {
     var loginForm = [
-			{ view: "text", value: '', label: "Kullanıcı Adı", labelAlign: 'left', labelWidth: 150, name: 'UserName' },
-			{ view: "text", type: 'password', value: '', label: "Şifre", labelAlign: 'left', labelWidth: 150, name: 'Password' },
-            { view: "checkbox", label: "Beni Hatırla", value: 1, labelAlign: 'left', labelWidth: 150, name: 'RememberMe' },
+
+            { view: "text", value: '', label: ML.UserName, labelAlign: 'left', labelWidth: 150, name: 'UserName' },
+			{ view: "text", type: 'password', value: '', label: ML.Password, labelAlign: 'left', labelWidth: 150, name: 'Password' },
+            { view: "checkbox", label: ML.RememberMe, value: 1, labelAlign: 'left', labelWidth: 150, name: 'RememberMe' },
 			{
-			    view: "button", value: "Giriş", width: 160, align: "center", click: function () {
+			    view: "button", value: ML.Login, width: 160, align: "center", click: function () {
 			        var form = this.getParentView();
 			        if (form.validate()) {
 			            LoginUser(form.getValues());
@@ -28,18 +29,18 @@ function InitializeComponents() {
                       scroll: false,
                       width: 400,
                       elements: loginForm,
-
+                      id: 'LoginForm',
                       rules: {
                           $obj: function () {
                               var data = this.getValues();
 
                               if (!webix.rules.isNotEmpty(data.UserName)) {
-                                  webix.message("Kullanıcı adı giriniz");
+                                  webix.message(ML.EnterUserName);
                                   return false;
                               }
 
                               if (!webix.rules.isNotEmpty(data.Password)) {
-                                  webix.message("Şifre giriniz");
+                                  webix.message(ML.EnterPassword);
                                   return false;
                               }
 
@@ -51,20 +52,29 @@ function InitializeComponents() {
             }
         ]
     });
+
 }
 
-function LoginUser(data)
-{
+function InitializeComponents() {
+    InitializeLoginForm();
+    InitializeLanguageForm();
+}
+
+function InitializeLanguageForm() {
+    var template = new Template();
+
+    var languageBox = new template.LanguageBox({containerId: 'LanguageContainer'});
+}
+
+function LoginUser(data) {
     ServerCall.Execute({ functionName: 'LoginUser', requestMessage: data, successCallBack: AfterLogin, failCallBack: null });
 }
 
-function AfterLogin(result)
-{
+function AfterLogin(result) {
     Core.Redirect(result);
 }
 
-function BindEvents()
-{
+function BindEvents() {
     $('#GuestLogin').click(
         function () {
             ServerCall.Execute({ functionName: 'GuestLogin', requestMessage: null, successCallBack: AfterLogin, failCallBack: null });

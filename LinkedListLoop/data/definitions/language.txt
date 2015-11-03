@@ -1,0 +1,4 @@
+﻿[
+	{ Name: 'tr-TR', Text: 'Türkçe' },
+	{ Name: 'en-US', Text: 'English' }
+]

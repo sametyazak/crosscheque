@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinkedListLoop.src.server.entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,7 @@ namespace LinkedListLoop.app
         protected void Page_Load(object sender, EventArgs e)
         {
             RootAddress.Value = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, "");
+            CurrentCulture.Value = GlobalConfiguration.CurrentCulture.Name;
         }
     }
 }

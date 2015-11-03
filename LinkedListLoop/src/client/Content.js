@@ -30,7 +30,7 @@
 
     CreateSlidingNavigation: function (mainContainer) {
         mainContainer.append('<div id="' + this.ContainerId + '_SlidingNavigation">');
-        mainContainer.append('<div class="nav-prev" id="' + this.ContainerId + '_Prev"><span class="side-nav-title" id="' + this.ContainerId + '_Prev_Title"></span> <- Prev</div>');
+        mainContainer.append('<div class="nav-prev" id="' + this.ContainerId + '_Prev"><span class="side-nav-title" id="' + this.ContainerId + '_Prev_Title"></span> <- ' + Global.GetString('Prev') + '</div>');
 
         for (var i = 0; i < this.MenuItems.length; i++) {
             var menuItem = this.MenuItems[i];
@@ -44,7 +44,7 @@
             }
         }
 
-        mainContainer.append('<div class="nav-next" id="' + this.ContainerId + '_Next">Next -> <span class="side-nav-title" id="' + this.ContainerId + '_Next_Title"></span></div>');
+        mainContainer.append('<div class="nav-next" id="' + this.ContainerId + '_Next">' + Global.GetString('Next') + ' -> <span class="side-nav-title" id="' + this.ContainerId + '_Next_Title"></span></div>');
         mainContainer.append('</div>');
     },
 

@@ -19,7 +19,7 @@ namespace LinkedListLoop.src.server
                 return;
             }
 
-            throw new Exception("Yalış kullanıcı adı veya şifre yanlış!");
+            throw new Exception(ResourceHelper.GetString("IncorrectUserNameOrPassword"));
         }
 
         public static void LogOut()
@@ -37,7 +37,7 @@ namespace LinkedListLoop.src.server
                 return;
             }
 
-            throw new Exception("Kullanıcı kayıt sırasında bir hata oluştu!");
+            throw new Exception(ResourceHelper.GetString("ErrorOnUserRegistration"));
         }
 
         public static void Manage(LocalPasswordModel model, string userName)
@@ -63,7 +63,7 @@ namespace LinkedListLoop.src.server
                 }
                 else
                 {
-                    throw new Exception("The current password is incorrect or the new password is invalid.");
+                    throw new Exception(ResourceHelper.GetString("PasswordIncorrectOrInvalid"));
                 }
             }
             else

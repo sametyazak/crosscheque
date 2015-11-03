@@ -1,8 +1,7 @@
 ﻿function InitializePage() {
-    ToogleLeftMenu();
-    //CreateLogGrid();
     SetPageEvents();
-    GetLogList()
+    GetLogList();
+    InitContainers();
 }
 
 function CreateLogGrid() {
@@ -42,14 +41,14 @@ function SetLogData(logList) {
             height: 800,
             columns: [
                 {
-                    id: "Level", editor: "text", header: ["Level", {content: "textFilter", placeholder: "Filter", colspan: 7}], width: 60
+                    id: "Level", editor: "text", header: ["Level", {content: "textFilter", placeholder: ML.Filter, colspan: 7}], width: 60
                 },
                 { id: "IP", editor: "text", header: ["IP", null], width: 100 },
-                { id: "ComputerName", editor: "text", header: ["Host", null], width: 100 },
-                { id: "Reference", editor: "text", header: ["Referans", null], width: 100 },
-                { id: "Message", editor: "text", header: ["Log", null], width: 300 },
-                { id: "Date", editor: "text", header: ["Tarih", null], width: 180 },
-                { id: "Url", editor: "text", header: ["Url", null], width: 330 }
+                { id: "ComputerName", editor: "text", header: [ML.Host, null], width: 100 },
+                { id: "Reference", editor: "text", header: [ML.Referans, null], width: 100 },
+                { id: "Message", editor: "text", header: [ML.Log, null], width: 300 },
+                { id: "Date", editor: "text", header: [ML.Date, null], width: 180 },
+                { id: "Url", editor: "text", header: [ML.Url, null], width: 330 }
             ],
             on:{
                 "onItemClick":function(id, e, trg){
@@ -122,4 +121,23 @@ function SetLogDetail(log)
 {
     var logDetail = JSON.stringify(log, undefined, 4);
     $('#LogDetail').html(logDetail);
+}
+
+function InitContainers() {
+    var logOptions = {
+        containerId: 'LogDetailContainer',
+
+        header: {
+            text: 'LogDetail',
+            id: 'Test'
+        },
+
+        detail: {
+            id: 'LogDetail',
+            wrapWithPre: true
+        }
+    };
+
+    var template = new Template();
+    var network = new template.Container(logOptions);
 }

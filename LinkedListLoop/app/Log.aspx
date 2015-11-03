@@ -41,16 +41,8 @@
         <div class="log-clear">
         </div>
 
-        <div class="log-detail">
-            <div id="Test" class="ColumnHeader">
-                Log Detay
-            </div>
-            <pre>
-                <div id="LogDetail">
+        <div class="log-detail" id="LogDetailContainer">
 
-                </div>
-            </pre>
         </div>
-
     </div>
 </asp:Content>

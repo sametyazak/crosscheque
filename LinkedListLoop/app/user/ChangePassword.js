@@ -4,11 +4,11 @@
 
 function InitializeComponents() {
     var passwordForm = [
-           { view: "text", type: 'password', value: '', label: "Eski Şifre:", labelAlign: 'left', labelWidth: 150, name: 'OldPassword' },
-           { view: "text", type: 'password', value: '', label: "Yeni Şifre:", labelAlign: 'left', labelWidth: 150, name: 'NewPassword' },
-           { view: "text", type: 'password', value: '', label: "Yeni Şifre Tekrar:", labelAlign: 'left', labelWidth: 150, name: 'ConfirmPassword' },
+           { view: "text", type: 'password', value: '', label: ML.OldPasswordLabel, labelAlign: 'left', labelWidth: 200, name: 'OldPassword' },
+           { view: "text", type: 'password', value: '', label: ML.NewPasswordLabel, labelAlign: 'left', labelWidth: 200, name: 'NewPassword' },
+           { view: "text", type: 'password', value: '', label: ML.NewPasswordConfirmLabel, labelAlign: 'left', labelWidth: 200, name: 'ConfirmPassword' },
            {
-               view: "button", value: "Kaydet", width: 160, align: "center", click: function () {
+               view: "button", value: ML.Save, width: 160, align: "center", click: function () {
                    var form = this.getParentView();
                    if (form.validate()) {
                        ChangePassword(form.getValues());
@@ -33,17 +33,17 @@ function InitializeComponents() {
                               var data = this.getValues();
 
                               if (!webix.rules.isNotEmpty(data.OldPassword)) {
-                                  webix.message("Eski şifrenizi giriniz!");
+                                  webix.message(ML.EnterOldPassword);
                                   return false;
                               }
 
                               if (!webix.rules.isNotEmpty(data.NewPassword) || data.NewPassword.length < 6) {
-                                  webix.message("Yeni Şifre en az 6 karakter olmalı");
+                                  webix.message(ML.NewPasswordCharacterLongError);
                                   return false;
                               }
 
                               if (data.NewPassword != data.ConfirmPassword) {
-                                  webix.message("Yeni Şifreler aynı değil!");
+                                  webix.message(ML.PasswordsNotSame);
                                   return false;
                               }
 
@@ -63,5 +63,5 @@ function ChangePassword(data)
 }
 
 function SetSuccessMessage() {
-    webix.message({ text: "İşlem Başarılı" });
+    webix.message({ text: ML.SuccessfullTransaction });
 }

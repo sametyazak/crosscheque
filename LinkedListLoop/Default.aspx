@@ -4,8 +4,8 @@
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
             //$('#TopMenu').hide();
-            SetMenuLayout();
-
+            Global.OpenLeftMenu();
+            Global.ChangeTopMenuColor();
             //var slidingItems = new Array();
             //slidingItems.push('Menu1');
             //slidingItems.push('Menu2');
@@ -42,9 +42,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="CrossChequeBody" runat="server">
     
         <div>
-            <div style="">
+            <%--<div style="">
                 <iframe width="560" height="300" src="https://www.youtube.com/embed/X3HeZCur-hI" frameborder="0" allowfullscreen></iframe>
-            </div>
+            </div>--%>
 
             <%--<div id="SlidingContainer">
             

@@ -19,5 +19,7 @@ namespace LinkedListLoop.src.server.entities
         public string Link { get; set; }
 
         public bool IsVisibleForNotAuthorized { get; set; }
+
+        public string Css { get; set; }
     }
 }

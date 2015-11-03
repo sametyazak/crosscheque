@@ -40,5 +40,9 @@
     IsVisible: function (id) {
         var item = $('#' + id);
         return item && item.is(':visible');
+    },
+
+    RefreshPage: function () {
+        location.reload();
     }
 }

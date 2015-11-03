@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -28,7 +29,7 @@ namespace LinkedListLoop
 
             GlobalConfiguration.IsClientSideLogEnabled = true;
             GlobalConfiguration.IsServerSideLogEnabled = true;
-
+            GlobalConfiguration.CurrentCulture = new CultureInfo("tr-TR");
         }
 
         protected void Session_Start(object sender, EventArgs e)
@@ -83,7 +84,7 @@ namespace LinkedListLoop
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588", ex);
+                throw new InvalidOperationException(ResourceHelper.GetString("SingleMembershipError"), ex);
             }
         }
     }

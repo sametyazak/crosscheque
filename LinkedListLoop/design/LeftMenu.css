@@ -302,22 +302,44 @@ img {
 }
 
 .nav-bg {
-    background-image: url(/img/header-icons.svg);
+    background-repeat:no-repeat;
+    
 }
 
 .nav-nobg {
 }
 
 .nav-bg.github {
-    background-position: -108px 0;
+    background-image: url(/img/menu/rsz_github2.png);
+    background-position:78px;
+    
 }
 
+
+
 .nav-bg.home {
-    background-position: -500px 0;
+    background-image: url(/img/menu/rsz_home.png);
+    background-position:70px;
 }
 
 .nav-bg.demo {
-    background-position: -500px 0;
+    background-image: url(/img/menu/rsz_demo.png);
+    background-position:80px;
+}
+
+.nav-bg.user {
+    background-image: url(/img/menu/rsz_user.png);
+    background-position:47px;
+}
+
+.nav-bg.log {
+    background-image: url(/img/menu/rsz_log.png);
+    background-position:65px;
+}
+
+.nav-bg.security {
+    background-image: url(/img/menu/rsz_security.png);
+    background-position:48px;
 }
 
 .nav-primary__item.active .nav-primary__link, .nav-primary__link:hover {
@@ -574,19 +596,15 @@ img {
 }
 
 .grid--log {
-    
 }
 
-@media all and (min-width:1020px) {
     .grid--log .log-main {
         -webkit-flex-basis: calc(65% - 12px);
         -ms-flex-preferred-size: calc(65% - 12px);
         flex-basis: calc(65% - 12px);
         max-width: calc(65% - 12px);
     }
-}
 
-@media all and (min-width:1020px) {
     .grid--log .log-detail {
         -webkit-flex-basis: calc(30% - 12px);
         -ms-flex-preferred-size: calc(30% - 12px);
@@ -594,42 +612,51 @@ img {
         max-width: calc(30% - 12px);
         word-wrap: break-word;
     }
+
+
+
+.grid .user-panel {
+    -webkit-flex-basis: calc(10%);
+    -ms-flex-preferred-size: calc(10%);
+    flex-basis: calc(10%);
+    max-width: calc(10%);
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
 }
 
-
-@media all and (min-width:1020px) {
-    .grid .user-panel {
-        -webkit-flex-basis: calc(15%);
-        -ms-flex-preferred-size: calc(15%);
-        flex-basis: calc(15%);
-        max-width: calc(15%);
-        color:#fff;
-        text-align:center;
-        line-height:20px;
-    }
+.grid .main-language-container {
+    -webkit-flex-basis: calc(10%);
+    -ms-flex-preferred-size: calc(10%);
+    flex-basis: calc(10%);
+    max-width: calc(10%);
 }
 
-@media all and (min-width:1020px) {
-    .grid .user-logout {
-        -webkit-flex-basis: calc(5%);
-        -ms-flex-preferred-size: calc(5%);
-        flex-basis: calc(5%);
-        max-width: calc(5%);
-        text-align:center;
-        background-color:#fff;
-        background-image: url(/img/logout.png);
-        background-repeat: no-repeat;
-        cursor:pointer;
-        background-position: center center;
-    }
+.grid .user-logout {
+    -webkit-flex-basis: calc(2%);
+    -ms-flex-preferred-size: calc(2%);
+    flex-basis: calc(2%);
+    max-width: calc(2%);
+    text-align: center;
+    background-image: url(/img/logout.png);
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-position: center center;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #fff;
+    color: #ffffff;
+    vertical-align: middle;
+    height: 36px;
+    margin-top: 2px;
 }
 
 @media all and (min-width:1020px) {
     .grid .nav-secondary-2 {
-        -webkit-flex-basis: calc(80%);
-        -ms-flex-preferred-size: calc(80%);
-        flex-basis: calc(80%);
-        max-width: calc(80%);
+        -webkit-flex-basis: calc(77%);
+        -ms-flex-preferred-size: calc(77%);
+        flex-basis: calc(77%);
+        max-width: calc(77%);
     }
 }
 
@@ -1204,14 +1231,14 @@ code[class*=language-], pre[class*=language-] {
 }
 
 .nav-next {
-    width: 190px;
+    width: 220px;
     display: inline-block;
     margin-right: 20px;
     cursor: pointer;
 }
 
 .nav-prev {
-    width: 190px;
+    width: 220px;
     display: inline-block;
     margin-right: 20px;
     cursor: pointer;
@@ -1292,5 +1319,20 @@ code[class*=language-], pre[class*=language-] {
 }
 
 .center-content {
-    display:inline-block;
+    display: inline-block;
+}
+
+.login-lang {
+    margin-top: 5px;
+    background-color: #00648c;
+}
+
+.lang-main {
+    margin-top: 5px;
+    background-color: #00648c;
+}
+
+.cheque-network {
+    border: 1px solid lightgray;
+    height: 600px;
 }

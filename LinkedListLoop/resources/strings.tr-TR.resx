@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Tutar</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Şifre Güncelleme</value>
+  </data>
+  <data name="Clean" xml:space="preserve">
+    <value>Temizle</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Şifre Tekrar</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="Demo" xml:space="preserve">
+    <value>Demo</value>
+  </data>
+  <data name="DeserializationMethodNotFound" xml:space="preserve">
+    <value>DeserializeObject(json) method u bulunamadı!</value>
+  </data>
+  <data name="EnterOldPassword" xml:space="preserve">
+    <value>Eski şifrenizi giriniz!</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Şifre giriniz</value>
+  </data>
+  <data name="EnterUserName" xml:space="preserve">
+    <value>Kullanıcı adı giriniz</value>
+  </data>
+  <data name="ErrorOnUserRegistration" xml:space="preserve">
+    <value>Kullanıcı kayıt sırasında bir hata oluştu!</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Github" xml:space="preserve">
+    <value>Github</value>
+  </data>
+  <data name="GuestFileNotFound" xml:space="preserve">
+    <value>müsafir giriş dosyası bulunamadı!</value>
+  </data>
+  <data name="Host" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="IncorrectAuthFormat" xml:space="preserve">
+    <value>Geçeriz yetki değeri : {0}, {1}</value>
+  </data>
+  <data name="IncorrectUserNameOrPassword" xml:space="preserve">
+    <value>Kullanıcı adı veya şifre yanlış!</value>
+  </data>
+  <data name="InvalidLoopIndex" xml:space="preserve">
+    <value>Geçersiz döngü index(ler)i</value>
+  </data>
+  <data name="InvalidMenuDefinition" xml:space="preserve">
+    <value>geçersiz menu tanımı</value>
+  </data>
+  <data name="InvalidQueryData" xml:space="preserve">
+    <value>Geçersiz İstek</value>
+  </data>
+  <data name="Log" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="LogFileNotFoundFormat" xml:space="preserve">
+    <value>log file not found-{0}</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Giriş</value>
+  </data>
+  <data name="LogMonitor" xml:space="preserve">
+    <value>Log İzleme</value>
+  </data>
+  <data name="MainPage" xml:space="preserve">
+    <value>Ana Safya</value>
+  </data>
+  <data name="MenuDefinitionFileNotFound" xml:space="preserve">
+    <value>menu tanım dosyası bulunamadı</value>
+  </data>
+  <data name="MethodNotFoundReflection" xml:space="preserve">
+    <value>Method bulunamadı!</value>
+  </data>
+  <data name="NewPasswordCharacterLongError" xml:space="preserve">
+    <value>Yeni Şifre en az 6 karakter olmalı</value>
+  </data>
+  <data name="NewPasswordConfirmLabel" xml:space="preserve">
+    <value>Yeni Şifre Tekrar:</value>
+  </data>
+  <data name="NewPasswordLabel" xml:space="preserve">
+    <value>Yeni Şifre:</value>
+  </data>
+  <data name="NoLoopFound" xml:space="preserve">
+    <value>2:Döngü bulunamadı</value>
+  </data>
+  <data name="NoLoopMatching" xml:space="preserve">
+    <value>1:Döngü Eşleşmesi bulunamadı</value>
+  </data>
+  <data name="NoRootFound" xml:space="preserve">
+    <value>Root node bulunamadı!</value>
+  </data>
+  <data name="OldPasswordLabel" xml:space="preserve">
+    <value>Eski Şifre:</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Şifre</value>
+  </data>
+  <data name="PasswordHint" xml:space="preserve">
+    <value>* Şifre en az 6 karakter olmalıdır</value>
+  </data>
+  <data name="PasswordIncorrectOrInvalid" xml:space="preserve">
+    <value>Şu anki şifre yanlış veya yeni şifre geçersiz!</value>
+  </data>
+  <data name="PasswordsNotSame" xml:space="preserve">
+    <value>Yeni Şifreler aynı değil!</value>
+  </data>
+  <data name="PasswordsNotSame2" xml:space="preserve">
+    <value>Şifreler aynı değil!</value>
+  </data>
+  <data name="Receiver" xml:space="preserve">
+    <value>Alıcı</value>
+  </data>
+  <data name="Referans" xml:space="preserve">
+    <value>Referans</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Beni Hatırla</value>
+  </data>
+  <data name="SampleData" xml:space="preserve">
+    <value>Örnek Veri</value>
+  </data>
+  <data name="SampleUserName" xml:space="preserve">
+    <value>(e.g. ali)</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="Sender" xml:space="preserve">
+    <value>Gönderen</value>
+  </data>
+  <data name="SenderReceiverList" xml:space="preserve">
+    <value>Gönderen Alıcı Listesi</value>
+  </data>
+  <data name="SenderReceiverNetwork" xml:space="preserve">
+    <value>Gönderen / Alıcı Ağı</value>
+  </data>
+  <data name="SingleMembershipError" xml:space="preserve">
+    <value>The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588</value>
+  </data>
+  <data name="SuccessfullTransaction" xml:space="preserve">
+    <value>İşlem Başarılı</value>
+  </data>
+  <data name="Transaction" xml:space="preserve">
+    <value>İşlem</value>
+  </data>
+  <data name="TransactionLoop" xml:space="preserve">
+    <value>İşlem Döngüsü</value>
+  </data>
+  <data name="TypeNotFoundReflection" xml:space="preserve">
+    <value>AjaxMethods class ı bulunamadı</value>
+  </data>
+  <data name="UnrecognizedError" xml:space="preserve">
+    <value>Hata oldu ama yakalayamadık!</value>
+  </data>
+  <data name="UploadFile" xml:space="preserve">
+    <value>Dosya Yükle</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Kullanıcı Adı</value>
+  </data>
+  <data name="UserNameMendatory" xml:space="preserve">
+    <value>* Zorunlu alan</value>
+  </data>
+  <data name="UserUpdate" xml:space="preserve">
+    <value>Kullanıcı İşlemleri</value>
+  </data>
+  <data name="InvalidLanguageDefinition" xml:space="preserve">
+    <value>Geçersiz dil dosya tanımı</value>
+  </data>
+  <data name="LanguageDefinitionFileNotFound" xml:space="preserve">
+    <value>Dil dosyası bulunamadı</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Yükle</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Yükleniyor...</value>
+  </data>
+  <data name="LoadSampleData" xml:space="preserve">
+    <value>Örnek Veri Yükle</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>İleri</value>
+  </data>
+  <data name="Prev" xml:space="preserve">
+    <value>Geri</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Hoşgeldiniz</value>
+  </data>
+  <data name="LogDetail" xml:space="preserve">
+    <value>Log Detay</value>
+  </data>
+</root>

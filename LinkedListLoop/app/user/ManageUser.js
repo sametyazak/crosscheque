@@ -41,7 +41,7 @@ function CreateForm() {
 function GetRoleForm() {
     var roleForm = [];
 
-    roleForm.push({ view: "combo", name: "username", label: "Kullanıcı Adı:", value: "", labelWidth: 150, options: userList });
+    roleForm.push({ view: "combo", name: "username", label: ML.UserName, value: "", labelWidth: 150, options: userList });
 
     for (var i = 0; i < roleList.length; i++) {
         var roleItem = { view: "checkbox", label: roleList[i], value: 0, labelAlign: 'left', labelWidth: 150, name: roleList[i] }
@@ -50,7 +50,7 @@ function GetRoleForm() {
 
     roleForm.push(
         {
-            view: "button", value: "Kaydet", width: 160, align: "center", click: function () {
+            view: "button", value: Global.GetString('Save'), width: 160, align: "center", click: function () {
                 var form = this.getParentView();
                 if (form.validate()) {
                     SaveUser(form.getValues());
@@ -84,7 +84,7 @@ function SaveUser(data) {
 }
 
 function SetSuccessMessage() {
-    webix.message({ text: "İşlem Başarılı" });
+    webix.message({ text: ML.SuccessfullTransaction });
 }
 
 function GetAllUsers() {

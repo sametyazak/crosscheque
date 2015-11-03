@@ -111,6 +111,7 @@
     <Content Include="app\user\Register.js" />
     <Content Include="CrossCheque.js" />
     <Content Include="data\definitions\guest.txt" />
+    <Content Include="data\definitions\language.txt" />
     <Content Include="data\definitions\LeftMenu.txt" />
     <Content Include="Default2.aspx" />
     <Content Include="design\CrossCheque.css" />
@@ -132,6 +133,16 @@
     <Content Include="img\logo.png" />
     <Content Include="img\logo2.png" />
     <Content Include="img\logout.png" />
+    <Content Include="img\menu\demo.ico" />
+    <Content Include="img\menu\log.png" />
+    <Content Include="img\menu\rsz_demo.png" />
+    <Content Include="img\menu\rsz_github2.png" />
+    <Content Include="img\menu\rsz_home.png" />
+    <Content Include="img\menu\rsz_log.png" />
+    <Content Include="img\menu\rsz_security.png" />
+    <Content Include="img\menu\rsz_user.png" />
+    <Content Include="img\menu\security.png" />
+    <Content Include="img\menu\user.png" />
     <Content Include="img\play.png" />
     <Content Include="lib\jquery\jquery-2.1.4.min.js" />
     <Content Include="lib\jquery\jquery-ui.js" />
@@ -161,10 +172,16 @@
     <Content Include="lib\webix\webix.css" />
     <Content Include="lib\webix\webix.js" />
     <Content Include="lib\webix\webix_debug.js" />
+    <Content Include="Service.asmx" />
     <Content Include="src\client\Content.js" />
     <Content Include="src\client\Core.js" />
+    <Content Include="src\client\lang\en-US.js" />
+    <Content Include="src\client\Global.js" />
     <Content Include="src\client\Menu.js" />
     <Content Include="src\client\ServerCall.js" />
+    <Content Include="src\client\Template.js" />
+    <Content Include="src\client\TopMenu.js" />
+    <Content Include="src\client\lang\tr-TR.js" />
     <Content Include="Web.config" />
     <Content Include="Default.aspx" />
   </ItemGroup>
@@ -231,6 +248,12 @@
     <Compile Include="ServerCall.ashx.cs">
       <DependentUpon>ServerCall.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Service.asmx.cs">
+      <DependentUpon>Service.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\server\entities\Language.cs" />
+    <Compile Include="src\server\ResourceHelper.cs" />
     <Compile Include="src\server\entities\LogDirection.cs" />
     <Compile Include="src\server\AjaxMethods.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -316,6 +339,10 @@
     <Folder Include="App_Data\" />
     <Folder Include="data\tmp\" />
     <Folder Include="lib\jqwidgets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resources\strings.en-US.resx" />
+    <EmbeddedResource Include="resources\strings.tr-TR.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

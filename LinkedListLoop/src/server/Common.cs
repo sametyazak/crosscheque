@@ -1,12 +1,17 @@
 ﻿using LinkedListLoop.entities;
+using LinkedListLoop.src.server;
 using LinkedListLoop.src.server.entities;
 using log4net.Appender;
 using log4net.Repository.Hierarchy;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Resources;
+using System.Text;
 using System.Web;
 using System.Xml.Linq;
 
@@ -59,9 +64,19 @@ namespace LinkedListLoop.src
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\definitions\LeftMenu.txt");
         }
 
+        public static string GetJsDirectory()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"src\client\lang\");
+        }
+
         public static string GetGuestInfoPath()
         {
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\definitions\guest.txt");
+        }
+
+        public static string GetLanguageDefPath()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\definitions\language.txt");
         }
 
         public static string GetLogFileName()
@@ -125,18 +140,46 @@ namespace LinkedListLoop.src
                     {
                         List<MenuItem> menuList = JsonConvert.DeserializeObject<List<MenuItem>>(menuJson);
                         menuList.Select(a => { a.Link = a.IsLocal ? string.Concat(GlobalConfiguration.Host, a.Link) : a.Link; return a; }).ToList();
+                        menuList.Select(a => { a.Title = ResourceHelper.GetString(a.Title); return a; }).ToList();
 
                         return menuList;
                     }
                     else
                     {
-                        throw new Exception("geçersiz menu tanımı");
+                        throw new Exception(ResourceHelper.GetString("InvalidMenuDefinition"));
                     }
                 }
             }
             else
             {
-                throw new Exception("menu tanım dosyası bulunamadı!");
+                throw new Exception(ResourceHelper.GetString("MenuDefinitionFileNotFound"));
+            }
+        }
+
+        public static List<Language> GetAvailableLanguages()
+        {
+            string langPath = GetLanguageDefPath();
+
+            if (File.Exists(langPath))
+            {
+                using (StreamReader reader = new StreamReader(langPath))
+                {
+                    string langJson = reader.ReadToEnd();
+
+                    if (!string.IsNullOrEmpty(langJson))
+                    {
+                        List<Language> langList = JsonConvert.DeserializeObject<List<Language>>(langJson);
+                        return langList;
+                    }
+                    else
+                    {
+                        throw new Exception(ResourceHelper.GetString("InvalidLanguageDefinition"));
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception(ResourceHelper.GetString("LanguageDefinitionFileNotFound"));
             }
         }
 
@@ -156,7 +199,7 @@ namespace LinkedListLoop.src
             }
             else
             {
-                throw new Exception("müsafir giriş dosyası bulunamadı!");
+                throw new Exception(ResourceHelper.GetString("GuestFileNotFound"));
             }
         }
 
@@ -165,6 +208,49 @@ namespace LinkedListLoop.src
             var values = Enum.GetValues(typeof(AccessLevel)).Cast<AccessLevel>();
 
             return values.Where(a => a.CompareTo(minLevel) >= 0).Select(b=>b.ToString()).ToList();
+        }
+
+        public static string GenerateMLJavascript()
+        {
+            string jsPath = GetJsDirectory();
+            string resourcePath = ResourceHelper.GetResourcePath();
+
+            string[] resourceFiles = Directory.GetFiles(resourcePath, "*.resx");
+
+            foreach (string file in resourceFiles)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(file);
+                string resourceCulture = fileName.Replace("strings.", string.Empty);
+                string jsFileName = string.Concat(jsPath, resourceCulture, ".js");
+
+                ResourceSet allResource = ResourceHelper.GetResourceSet(new CultureInfo(resourceCulture));
+
+                StringBuilder jsContent = new StringBuilder();
+                jsContent.AppendLine("var ML = {");
+
+                foreach (DictionaryEntry entry in allResource)
+                {
+                    string resourceKey = entry.Key.ToString();
+                    string resource = entry.Value.ToString();
+
+                    jsContent.AppendLine(string.Format("{0}: '{1}',", resourceKey, resource));
+                }
+
+                jsContent.AppendLine( string.Format("culture: '{0}'", resourceCulture));
+                jsContent.AppendLine("};");
+
+                if (!File.Exists(jsFileName))
+                {
+                    using (File.Create(jsFileName)) { }
+                }
+
+                using (StreamWriter writer = new StreamWriter(jsFileName))
+                {
+                    writer.Write(jsContent.ToString());
+                }
+            }
+
+            return "ok";
         }
     }
 }

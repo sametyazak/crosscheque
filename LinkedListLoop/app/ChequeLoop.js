@@ -7,12 +7,60 @@ function InitializePage() {
     //GetSampleData();
     CreateLoopList();
     SetPageEvents();
+    InitTopMenu();
+    InitContainers();
+}
 
-    $('#TopNavUl').show();
+function InitContainers()
+{
+    var networkOptions = {
+        containerId: 'NetworkContainer',
+
+        header: {
+            text: 'SenderReceiverNetwork'
+        },
+
+        detail: {
+            id: 'ChequeNetwork',
+            css: 'cheque-network'
+        }
+    };
+
+    var template = new Template();
+    var network = new template.Container(networkOptions);
+}
+
+function InitTopMenu() {
+    var topMenuConfig = {
+        id: 'TopNavUl',
+        containerId: 'TopNavUlContainer',
+        listItems: [
+            {
+                name: 'Process', contentCss: 'top-menu-process', text: '', css: 'nav-secondary__item process',
+                onClick: ProcessSenderList
+            },
+            {
+                name: 'TopMenuSample', contentCss: 'top-menu-sample', text: ML.SampleData,
+                onClick: function (e) {
+                    var offset = $(this).offset();
+                    ToggleChildDiv('SampleDataContainer', offset);
+                }
+            },
+            {
+                name: 'TopMenuUpload', contentCss: 'top-menu-upload', text: ML.UploadFile,
+                onClick: function (e) {
+                    var offset = $(this).offset();
+                    ToggleChildDiv('UploadDataContainer', offset);
+                }
+            }
+        ]
+    }
+
+    var topMenu = new TopMenu(topMenuConfig);
 }
 
 function GetSenderList() {
-    ServerCall.Execute({ functionName: 'GetChequeListJson', requestMessage: null, successCallBack: SetGridData, failCallBack: null});
+    ServerCall.Execute({ functionName: 'GetChequeListJson', requestMessage: null, successCallBack: SetGridData, failCallBack: null });
 }
 
 function CreateSenderList() {
@@ -80,13 +128,13 @@ function SetGridData(senderList) {
             editable: true,
             math: true,
             autoheight: false,
-            height:800,
+            height: 800,
             autowidth: false,
             columns: [
-                { id: "Sender", editor: "text", header: "Gönderen", width: 100 },
-                { id: "Receiver", editor: "text", header: "Alıcı", width: 100 },
-                { id: "Amount", editor: "text", header: "Tutar", width: 80 },
-                { id: "Date", editor: "date", header: "Tarih", width: 100 },
+                { id: "Sender", editor: "text", header: ML.Sender, width: 100 },
+                { id: "Receiver", editor: "text", header: ML.Receiver, width: 100 },
+                { id: "Amount", editor: "text", header: ML.Amount, width: 80 },
+                { id: "Date", editor: "date", header: ML.Date, width: 100 },
             ],
             editaction: "dblclick",
             pager: "bottomPager",
@@ -116,18 +164,18 @@ function SetGridData(senderList) {
                   { view: "pager", id: "bottomPager", size: 11, width: 200 },
                   {},
                   {
-                      view: "button", value: "Ekle", width: 100, click: function () {
+                      view: "button", value: ML.Add, width: 100, click: function () {
                           var id = $$("dt").add({ Sender: "", Receiver: "", Amount: 0, Date: "2014-01-01" });
                           $$("dt").editCell(id, "Sender");
                       }
                   },
                   {
-                      view: "button", value: "Sil", width: 100, click: function () {
+                      view: "button", value: ML.Delete, width: 100, click: function () {
                           $$("dt").remove($$("dt").getSelectedId(true));
                       }
                   },
                   {
-                      view: "button", value: "Temizle", width: 100, click: function () {
+                      view: "button", value: ML.Clean, width: 100, click: function () {
                           $$("dt").clearAll();
                           $$("LoopDt").clearAll();
                       }
@@ -140,11 +188,11 @@ function SetGridData(senderList) {
 }
 
 function SetPageEvents() {
-    $('#btnProcessSenderList').click(
-        function () {
-            ProcessSenderList();
-        }
-    );
+    //$('#btnProcessSenderList').click(
+    //    function () {
+    //        ProcessSenderList();
+    //    }
+    //);
 
     $('#btnLoadSample').click(
         function () {
@@ -201,7 +249,7 @@ function SetLoopResults(loopListResult) {
             }
 
             if (!$$("LoopDt").count()) {
-                $$("LoopDt").showOverlay("Döngü Bulunamadı!");
+                $$("LoopDt").showOverlay(ML.NoLoopFound);
             }
             else {
                 $$("LoopDt").hideOverlay();
@@ -215,12 +263,12 @@ function SetLoopResults(loopListResult) {
                 container: "LoopList",
                 view: "datatable",
                 columns: [
-                    { id: "LoopHtmlText", header: "İşlem Döngüsü", width: 700 }
+                    { id: "LoopHtmlText", header: ML.NoLoopFound, width: 700 }
                 ],
                 autoheight: true,
                 autowidth: true,
                 editable: false,
-                fixedRowHeight:false,
+                fixedRowHeight: false,
 
                 on: {
                     onBeforeLoad: function () {
@@ -230,7 +278,7 @@ function SetLoopResults(loopListResult) {
                         //this.hideOverlay();
 
                         if (!this.count())
-                            this.showOverlay("Döngü Bulunamadı!");
+                            this.showOverlay(ML.NoLoopFound);
 
                     }
                 },
@@ -281,16 +329,15 @@ function GetSampleDownloadLink() {
     ServerCall.Execute({ functionName: 'GetSampleDownloadLink', requestMessage: null, successCallBack: null, failCallBack: null });
 }
 
-function GetNetworkOptions()
-{
+function GetNetworkOptions() {
     var options = {
-        
+
         nodes: {
             shape: 'dot',
-            scaling:{
+            scaling: {
                 label: {
-                    min:8,
-                    max:20
+                    min: 8,
+                    max: 20
                 }
             },
             shadow: {
@@ -327,7 +374,7 @@ function SetChequeNetwork() {
         var nodeArr = new Array();
 
         for (var i = 0; i < nodeList.length; i++) {
-            var node = { id: nodeList[i].Id, label: nodeList[i].Name, value: nodeList[i].Value, title: nodeList[i].Text};
+            var node = { id: nodeList[i].Id, label: nodeList[i].Name, value: nodeList[i].Value, title: nodeList[i].Text };
             nodeArr.push(node);
         }
 
@@ -357,9 +404,9 @@ function SetChequeNetwork() {
 function InitSlidingMenu() {
     var slidingItems = new Array();
 
-    var senderList = { MenuId: 'SenderList', OnStart: null, OnComplete: null, Title: 'Gönderen Alıcı Listesi' };
-    var loopList = { MenuId: 'LoopList', OnStart: ProcessSenderList, OnComplete: null, Title: 'İşlem Döngüsü' };
-    var networkContainer = { MenuId: 'NetworkContainer', OnStart: SetChequeNetwork, OnComplete: null, Title: 'Gönderen Alıcı Ağı' };
+    var senderList = { MenuId: 'SenderList', OnStart: null, OnComplete: null, Title: ML.SenderReceiverList };
+    var loopList = { MenuId: 'LoopList', OnStart: ProcessSenderList, OnComplete: null, Title: ML.TransactionLoop };
+    var networkContainer = { MenuId: 'NetworkContainer', OnStart: SetChequeNetwork, OnComplete: null, Title: ML.SenderReceiverNetwork };
 
     slidingItems.push(senderList);
     slidingItems.push(loopList);

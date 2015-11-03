@@ -26,7 +26,7 @@ namespace LinkedListLoop
 
                 if (string.IsNullOrEmpty(queryData))
                 {
-                    throw new Exception("Invalid Query Data");
+                    throw new Exception(ResourceHelper.GetString("InvalidQueryData"));
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace LinkedListLoop
                 }
                 else
                 {
-                    errorResult.ErrorMessage = "Hata oldu ama yakalayamadık!";
+                    errorResult.ErrorMessage = ResourceHelper.GetString("UnrecognizedError");
                     errorResult.ErrorDetail = string.Empty;
                 }
 

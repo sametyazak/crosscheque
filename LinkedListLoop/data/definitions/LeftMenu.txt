@@ -1,8 +1,8 @@
 ﻿[
-	{Name: 'MainPage', Title: 'Ana Sayfa', MinAccessLevel: 'Guest', IsLocal: true, Link: '/Default.aspx', IsVisibleForNotAuthorized: false},
-	{Name: 'Demo', Title: 'Demo', MinAccessLevel: 'Demo', IsLocal: true, Link: '/app/ChequeLoop.aspx', IsVisibleForNotAuthorized: true},
-	{Name: 'LogMonitor', Title: 'Log İzleme', MinAccessLevel: 'Developer', IsLocal: true, Link: '/app/Log.aspx', IsVisibleForNotAuthorized: true},
-	{Name: 'ManageUser', Title: 'Kullanıcı Güncelleme', MinAccessLevel: 'Developer', IsLocal: true, Link: '/app/user/ManageUser.aspx', IsVisibleForNotAuthorized: true},
-	{Name: 'ChangePassword', Title: 'Şifre İşlemleri', MinAccessLevel: 'Developer', IsLocal: true, Link: '/app/user/ChangePassword.aspx', IsVisibleForNotAuthorized: true},
-	{Name: 'Github', Title: 'Github', MinAccessLevel: 'Developer', IsLocal:false, Link: 'https://github.com/sametyazak/crosscheque', IsVisibleForNotAuthorized: false}
+	{Name: 'MainPage', Title: 'MainPage', MinAccessLevel: 'Guest', IsLocal: true, Link: '/Default.aspx', IsVisibleForNotAuthorized: false, Css: ''},
+	{Name: 'Demo', Title: 'Demo', MinAccessLevel: 'Demo', IsLocal: true, Link: '/app/ChequeLoop.aspx', IsVisibleForNotAuthorized: true, Css:'demo'},
+	{Name: 'LogMonitor', Title: 'LogMonitor', MinAccessLevel: 'Developer', IsLocal: true, Link: '/app/Log.aspx', IsVisibleForNotAuthorized: true, Css: 'log'},
+	{Name: 'ManageUser', Title: 'UserUpdate', MinAccessLevel: 'Developer', IsLocal: true, Link: '/app/user/ManageUser.aspx', IsVisibleForNotAuthorized: true, Css: ''},
+	{Name: 'ChangePassword', Title: 'ChangePassword', MinAccessLevel: 'Developer', IsLocal: true, Link: '/app/user/ChangePassword.aspx', IsVisibleForNotAuthorized: true, Css: ''},
+	{Name: 'Github', Title: 'Github', MinAccessLevel: 'Developer', IsLocal:false, Link: 'https://github.com/sametyazak/crosscheque', IsVisibleForNotAuthorized: false, Css: ''}
 ]

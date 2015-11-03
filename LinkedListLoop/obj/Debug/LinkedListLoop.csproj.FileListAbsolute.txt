@@ -1,5 +1,7 @@
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\LinkedListLoop.dll
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\LinkedListLoop.pdb
+C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\en-US\LinkedListLoop.resources.dll
+C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\tr-TR\LinkedListLoop.resources.dll
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\DotNetOpenAuth.AspNet.dll
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\DotNetOpenAuth.Core.dll
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\DotNetOpenAuth.OAuth.Consumer.dll
@@ -25,6 +27,11 @@ C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedList
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\Newtonsoft.Json.xml
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\WebMatrix.Data.xml
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\bin\WebMatrix.WebData.xml
+C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\obj\Debug\LinkedListLoop.resources.strings.en-US.resources
+C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\obj\Debug\LinkedListLoop.resources.strings.tr-TR.resources
+C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\obj\Debug\LinkedListLoop.csproj.GenerateResource.Cache
+C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\obj\Debug\en-US\LinkedListLoop.resources.dll
+C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\obj\Debug\tr-TR\LinkedListLoop.resources.dll
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\obj\Debug\LinkedListLoop.dll
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\obj\Debug\LinkedListLoop.pdb
 C:\Users\sametya\Documents\Visual Studio 2012\Projects\LinkedListLoop\LinkedListLoop\obj\Debug\LinkedListLoop.csprojResolveAssemblyReference.cache

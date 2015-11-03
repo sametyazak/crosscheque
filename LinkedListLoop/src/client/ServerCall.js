@@ -8,21 +8,25 @@
                 LogRequest: Core.IsUndefined(options.LogRequest) ? true : options.LogRequest
             });
 
+            var returnObject = {};
+
             var queryData = 'queryData=' + postData;
             var url = $('#RootAddress').val() + '/ServerCall.ashx';
+            var async = Core.IsUndefined(options.async) ? true : options.async;
 
             Core.ShowOverlay();
 
-            $.ajax({
+            var ajaxOptions = {
                 type: "POST",
                 url: url,
                 data: queryData,
                 responseType: "json",
+                async: async,
                 success: function (transport, json) {
                     var resultObject = JSON.parse(transport);
 
                     if (resultObject) {
-                        var returnObject = resultObject && resultObject.ResultObject ? resultObject.ResultObject : resultObject;
+                        returnObject = resultObject && resultObject.ResultObject ? resultObject.ResultObject : resultObject;
 
                         if (resultObject && resultObject.IsError) {
                             if (Core.IsFunction(options.failCallBack)) {
@@ -46,7 +50,14 @@
 
                     Core.HideOverlay();
                 }
-            });
+            }
+
+            $.ajax(ajaxOptions);
+
+            if (!async)
+            {
+                return returnObject;
+            }
         }
         catch (ex)
         {

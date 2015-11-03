@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -14,5 +15,7 @@ namespace LinkedListLoop.src.server.entities
         public static List<MenuItem> MenuList { get; set; }
 
         public static string Host { get; set; }
+
+        public static CultureInfo CurrentCulture { get; set; } 
     }
 }

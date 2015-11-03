@@ -22,6 +22,12 @@
             var menuItem = menuList[i];
             var listItem = $('<li class="nav-primary__item"></li>');
 
+            if (menuItem.Css)
+            {
+                listItem.addClass('nav-bg');
+                listItem.addClass(menuItem.Css);
+            }
+
             var link = $('<a id="' + this.options.ContainerId + '_' + menuItem.Name
                 + '" href="' + menuItem.Link + '" class="nav-primary__link">' + menuItem.Title + '</a>');
 

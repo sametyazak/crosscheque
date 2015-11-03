@@ -1,14 +1,15 @@
 ﻿function InitializePage() {
     InitializeComponents();
+    InitializeLanguageForm();
 }
 
 function InitializeComponents() {
     var registerForm = [
-			{ view: "text", label: "Kullanıcı Adı", placeholder: "(e.g. ali)", bottomLabel: "* Zorunlu alan", name: 'UserName' },
-			{ view: "text", type: "password", label: "Şifre", bottomPadding: 35, bottomLabel: "* Şifre en az 6 karakter olmalıdır", name: 'Password' },
-            { view: "text", type: "password", label: "Şifre Tekrar", name: 'ConfirmPassword' },
+			{ view: "text", label: ML.UserName, placeholder: ML.SampleUserName, bottomLabel: ML.UserNameMendatory, name: 'UserName' },
+			{ view: "text", type: "password", label: ML.Password, bottomPadding: 35, bottomLabel: ML.PasswordHint, name: 'Password' },
+            { view: "text", type: "password", label: ML.ConfirmPassword, name: 'ConfirmPassword' },
 			{
-			    view: "button", value: "Kaydet", width: 160, align: "center", click: function () {
+			    view: "button", value: ML.Save, width: 160, align: "center", click: function () {
 			        var form = this.getParentView();
 			        if (form.validate()) {
 			            SaveUser(form.getValues());
@@ -32,17 +33,17 @@ function InitializeComponents() {
                 var data = this.getValues();
 
                 if (!webix.rules.isNotEmpty(data.UserName)) {
-                    webix.message("Kullanıcı adı giriniz");
+                    webix.message(ML.EnterUserName);
                     return false;
                 }
 
                 if (!webix.rules.isNotEmpty(data.Password) || data.Password.length < 6) {
-                    webix.message("Şifre en az 6 karakter olmalı");
+                    webix.message(ML.PasswordHint);
                     return false;
                 }
 
                 if (data.Password != data.ConfirmPassword) {
-                    webix.message("Şifreler aynı değil!");
+                    webix.message(ML.PasswordsNotSame2);
                     return false;
                 }
 
@@ -61,4 +62,10 @@ function SaveUser(data)
 
 function AfterRegister(result) {
     Core.Redirect(result);
+}
+
+function InitializeLanguageForm() {
+    var template = new Template();
+
+    var languageBox = new template.LanguageBox({ containerId: 'LanguageContainer' });
 }

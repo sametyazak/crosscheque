@@ -4,13 +4,6 @@
     <script src="ChequeLoop.js"></script>
     <link href="../lib/vis/vis.css" rel="stylesheet" />
     <script src="../lib/vis/vis.js"></script>
-
-    <style type="text/css">
-        #ChequeNetwork {
-            border: 1px solid lightgray;
-            height: 600px;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="CrossChequeBody" runat="server">
     <script type="text/javascript" charset="utf-8">
@@ -18,7 +11,6 @@
 
         $(document).ready(function () {
             InitializePage();
-            ToogleLeftMenu();
         });
 
     </script>
@@ -34,11 +26,7 @@
             <div id="LoopList"></div>
 
             <div id="NetworkContainer">
-                <div class="ColumnHeader">
-                    Gönderen/Alıcı Ağı
-                </div>
-                <div id="ChequeNetwork">
-                </div>
+                
             </div>
         </div>
     </div>
