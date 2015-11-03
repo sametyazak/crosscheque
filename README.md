@@ -4,6 +4,7 @@ Feel free to [visit](http://www.crosscheques.com/)
 
 Version | Date | Explanation
 ------------ | ------------- | -------------
+2.1 | 2015-11-03 | multi lingual feature with Turkish and English
 2.0 | 2015-10-27 | user login/management, log monitoring, page authorization added
 1.4 | 2015-10-20 | sliding content added
 1.3 | 2015-10-07 | new page design
