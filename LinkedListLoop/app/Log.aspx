@@ -13,21 +13,19 @@
 
     <style>
         .log-info {
-            background-color: #27ae60;
-            color: #fff;
+            color: #27ae60;
         }
 
         .log-error {
-            background-color: #FFAAAA;
+            color: #FFAAAA;
         }
 
         .log-debug {
-            background-color: #EFF51A;
+            color: #EFF51A;
         }
 
         .log-fatal {
-            background-color: #800000;
-            color: #fff;
+            color: #800000;
         }
     </style>
 </asp:Content>

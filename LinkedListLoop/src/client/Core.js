@@ -1,4 +1,6 @@
 ﻿var Core = {
+    OverlayProcess: 0,
+
     IsArray: function (obj) {
         return Object.prototype.toString.call(obj) === '[object Array]';
     },
@@ -15,12 +17,14 @@
     DynamicCall: function (func, args) {
         var myObject;
         myObject = func.apply(myObject, args);
+        return myObject;
     },
 
     ShowOverlay: function () {
         var overlayEl = $('#MasterOverlay');
 
         if (overlayEl) {
+            Core.OverlayProcess++;
             overlayEl.show();
         }
     },
@@ -29,7 +33,11 @@
         var overlayEl = $('#MasterOverlay');
 
         if (overlayEl) {
-            overlayEl.hide();
+            Core.OverlayProcess--;
+
+            if (Core.OverlayProcess == 0) {
+                overlayEl.hide();
+            }
         }
     },
 

@@ -102,6 +102,98 @@ var Template = function () {
 
         return true;
     }
+
+
+    this.FileUpload = function (options)
+    {
+        this.options = options;
+    }
+
+    this.FileUpload.prototype.GetConfig = function ()
+    {
+        if (!this.Validate()) return;
+
+        return {
+            view: "form",
+            type: "line",
+            scrollY: true,
+            padding: 10,
+            //width: 500,
+            rows: [
+             {
+                 view: "uploader", id: this.options.uploaderId, height: 37, align: "center", type: "iconButton", icon: "plus-circle",
+                 label: Global.GetString('AddFiles'), autosend: false, link: this.options.listId, upload: $('#RootAddress').val() + '/FileUpload.aspx' + this.options.queryString
+             },
+             {
+                 borderless: true,
+                 view: "list",
+                 id: this.options.listId,
+                 type: this.options.uploaderTypeName,
+                 scrollY: true,
+                 autoheight: false,
+                 minHeight: 100
+             },
+             {
+                 id: this.options.uploadButtonId,
+                 cols: [
+                     { view: "button", label: Global.GetString('Upload'), type: "iconButton", icon: "upload", click: this.options.uploadClick, align: "center" },
+                     { width: 5 },
+                     { view: "button", label: Global.GetString('Cancel'), type: "iconButton", icon: "cancel-circle", click: this.options.cancelClick, align: "center" }
+
+                 ]
+             }
+            ]
+        };
+    }
+
+    this.FileUpload.prototype.GetUploaderTypeConfig = function ()
+    {
+        return {
+            name: this.options.uploaderTypeName,
+            template: function (f, type) {
+                var html = "<div class='overall'><div class='name'>" + f.name + "</div>";
+                html += "<div class='remove_file'><span style='color:#AAA' class='cancel_icon'></span></div>";
+                html += "<div class='status'>";
+                html += "<div class='progress " + f.status + "' style='width:" + (f.status == 'transfer' || f.status == "server" ? f.percent + "%" : "0px") + "'></div>";
+                html += "<div class='message " + f.status + "'>" + type.status(f) + "</div>";
+                html += "</div>";
+                html += "<div class='size'>" + f.sizetext + "</div></div>";
+                return html;
+            },
+            status: function (f) {
+                var messages = {
+                    server: Global.GetString('Done'),
+                    error: Global.GetString('Error'),
+                    client: Global.GetString('Ready'),
+                    transfer: f.percent + "%"
+                };
+                return messages[f.status]
+
+            },
+            on_click: {
+                "remove_file": function (ev, id) {
+                    $$(this.config.uploader).files.remove(id);
+                }
+            },
+            height: 35
+        };
+    }
+
+    this.FileUpload.prototype.Validate = function ()
+    {
+        if (!this.options) return false;
+        if (!this.options.uploaderId) this.options.uploaderId = 'upl1';
+        if (!this.options.listId) this.options.listId = 'mylist';
+        if (!this.options.uploadButtonId) this.options.uploadButtonId = 'uploadButtons';
+        if (!this.options.uploaderTypeName) this.options.uploaderTypeName = 'myUploader';
+
+        if (!this.options.queryString)
+            this.options.queryString = '';
+        else
+            this.options.queryString = '?' + this.options.queryString;
+
+        return true;
+    }
 };
 
 this.Template.prototype.Init = function () {

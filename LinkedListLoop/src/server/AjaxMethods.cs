@@ -1,6 +1,8 @@
 ﻿using LinkedListLoop.entities;
 using LinkedListLoop.src.client;
 using LinkedListLoop.src.server.entities;
+using LinkedListLoop.src.server.entities.transaction_types;
+using LinkedListLoop.src.server.transaction_types.File;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,281 +18,79 @@ namespace LinkedListLoop.src.server
 {
     public class AjaxMethods : System.Web.UI.Page
     {
-        public static AjaxResult GetSampleData()
+        public static string GetSampleData(string typeName)
         {
-            AjaxResult result = new AjaxResult();
-            List<ChequeInfo> sampleList = new List<ChequeInfo>();
+            TransactionType tranType = TransactionHelper.GetTransactionType(typeName);
 
-            try
+            string sampleDataPath = GetSampleDataPath(typeName);
+
+            FileService fileService = new FileService();
+            TranFileInfo file = fileService.GetRecordByPath(sampleDataPath);
+
+            if (file == null || string.IsNullOrEmpty(file.Id))
             {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\cc_sample_data.csv");
-                sampleList = Common.GetFileChequeList(path, false);
-                result.IsError = false;
-            }
-            catch (Exception ex)
-            {
-                sampleList = new List<ChequeInfo>();
-                result.IsError = true;
-                result.ErrorMessage = ex.Message;
+                TranFileInfo newSampleFile = new TranFileInfo()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    CompanyInfo = string.Empty,
+                    UserInfo = WebSecurity.CurrentUserName,
+                    Path = sampleDataPath,
+                    TransactionType = typeName
+                };
+
+                using (StreamReader reader = new StreamReader(sampleDataPath))
+                {
+                    var processor = TransactionHelper.GetDynamicTransactionProcessor(typeName);
+                    string tableName = processor.UploadFile(typeName, reader.BaseStream, newSampleFile.Id);
+
+                    newSampleFile.ContentLocation = FileContentLocation.TempTable;
+                    newSampleFile.TempTableName = tableName;
+                }
+
+                fileService.Create(newSampleFile);
+                file = newSampleFile;
             }
 
-            result.ResultObject = sampleList;
+            return file.Id;
+        }
+
+        public static AjaxResult GetFileRecords(GetFilesRequest request)
+        {
+            var processor = TransactionHelper.GetDynamicTransactionProcessor(request.TranTypeName);
+            TransactionType tranType = TransactionHelper.GetTransactionType(request.TranTypeName);
+            AjaxResult result = processor.ReadFileRecords(request.FileId, tranType);
+            
+            return result;
+        }
+
+        public static LoopProcessResult ProcessSenderFile(ProcessFileRequest request)
+        {
+            var processor = TransactionHelper.GetDynamicTransactionProcessor(request.TranTypeName);
+            TransactionType tranType = TransactionHelper.GetTransactionType(request.TranTypeName);
+            LoopProcessResult result = processor.ProcessSenderFile(request.FileId, tranType);
 
             return result;
         }
 
-        public static AjaxResult GetFileRecords(string path)
+        public static List<UiGridColumn> GetTransactionTypeColumnList(string typeName)
         {
-            AjaxResult result = new AjaxResult();
+            return TransactionHelper.GetTransactionTypeColumnList(typeName);
+        }
 
-            try
-            {
-                result.ResultObject = Common.GetFileChequeList(path, true);
-                result.IsError = false;
-            }
-            catch (Exception ex)
-            {
-                result.IsError = true;
-                result.ErrorMessage = ex.Message;
-            }
+        public static string GetSampleDataPath(string typeName)
+        {
+            TransactionType tranType = TransactionHelper.GetTransactionType(typeName);
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, tranType.SampleDataPath);
+        }
 
-            return result;
+        public static List<TransactionType> GetTransactionTypeList()
+        {
+            return GlobalConfiguration.TransctionTypes;
         }
 
         public static byte[] GetSampleDownloadLink()
         {
-            //string domain = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, "");
-            //string path = string.Concat(domain, @"/Data/");
-            //System.Net.WebClient client = new System.Net.WebClient();
-            //client.DownloadFile(Common.GetSampleDataFilePath(), @"c:\temp\cc_sample_data.csv");
-
-            return File.ReadAllBytes(Common.GetSampleDataFilePath());
-
-            //return path;
-        }
-
-        public static string GetSampleDataText()
-        {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\cc_sample_data.csv");
-            return JsonConvert.SerializeObject((Common.GetFileChequeList(path, false)));
-        }
-
-        public static LoopProcessResult GetFilteredLoops(List<ChequeInfo> senderList)
-        {
-            LoopProcessResult result = new LoopProcessResult();
-
-            if (senderList != null)
-            {
-                List<LoopResult> loops = GetTreeLoops(senderList);
-
-                if (loops != null)
-                {
-                    loops = loops.Where(a => a.HasLoop).ToList();
-                }
-
-                List<NetworkItem> networkList = senderList
-                    .GroupBy(l => new { l.Sender, l.Receiver })
-                    .Select(cl => new NetworkItem
-                    {
-                        Sender = cl.First().Sender,
-                        Receiver = cl.First().Receiver,
-                        NodeValue = cl.Count(),
-                        EdgeTitle = string.Format("{0} {1}", cl.Count(), ResourceHelper.GetString("Transaction"))
-                    }).ToList();
-
-                List<string> nodeTotalList = new List<string>();
-                nodeTotalList.AddRange(senderList.Select(a => a.Sender).ToList());
-                nodeTotalList.AddRange(senderList.Select(a => a.Receiver).ToList());
-
-                List<NodeItem> nodeList = nodeTotalList
-                    .GroupBy(a => a)
-                    .Select(s => new NodeItem
-                    {
-                        Id = s.First(),
-                        Name = s.First(),
-                        Value = s.Count(),
-                        Text = string.Format("{0} {1}", s.Count(), ResourceHelper.GetString("Transaction"))
-                    }).ToList();
-
-                result.LoopList = loops;
-                result.NetworkList = networkList;
-                result.NodeList = nodeList;
-            }
-
-            return result;
-        }
-
-        public static List<LoopResult> GetTreeLoops(List<ChequeInfo> chequeList)
-        {
-            List<LoopResult> loops = new List<LoopResult>();
-
-            if (chequeList != null && chequeList.Count > 0)
-            {
-                SenderReceiverList list = GetSenderReceiverList(chequeList);
-
-                if (list.RootList.Count == 0)
-                {
-                    throw new Exception(ResourceHelper.GetString("NoRootFound"));
-                }
-
-                foreach (string root in list.RootList)
-                {
-                    loops.AddRange(GetTreeLoopsRecursive(root, new List<string>(), list.TotalList));
-                }
-            }
-            return loops;
-        }
-
-        private static List<LoopResult> GetTreeLoopsRecursive(string rootNode, List<string> path, Dictionary<string, List<string>> senderReceiverList)
-        {
-            List<LoopResult> loops = new List<LoopResult>();
-            List<string> subPath = new List<string>();
-            subPath.AddRange(path);
-
-            if (subPath.Contains(rootNode))
-            {
-                subPath.Add(rootNode);
-                LoopResult loopRes = GetLoopResult(subPath, rootNode);
-                loops.Add(loopRes);
-                return loops;
-            }
-
-            subPath.Add(rootNode);
-
-            if (senderReceiverList.ContainsKey(rootNode))
-            {
-                List<string> subSenders = senderReceiverList[rootNode];
-
-                foreach (string sub in subSenders)
-                {
-                    loops.AddRange(GetTreeLoopsRecursive(sub, subPath, senderReceiverList));
-                }
-            }
-
-            loops.Add(GetLoopResult(subPath, string.Empty));
-            return loops;
-        }
-
-        private static SenderReceiverList GetSenderReceiverList(List<ChequeInfo> chequeList)
-        {
-            SenderReceiverList senderReceiverList = new SenderReceiverList();
-            List<string> rootList = new List<string>();
-
-            Dictionary<string, List<string>> srList = new Dictionary<string, List<string>>();
-            List<string> allReceiverList = new List<string>();
-
-            string toBeRemovedRoot = string.Empty;
-
-            foreach (ChequeInfo cheque in chequeList)
-            {
-                if (cheque.Sender != cheque.Receiver)
-                {
-                    bool senderExists = srList.Keys.Contains(cheque.Sender);
-                    bool receiverExists = srList.Keys.Contains(cheque.Receiver);
-                    bool allReceiverExists = allReceiverList.Contains(cheque.Sender);
-
-                    allReceiverList.Add(cheque.Receiver);
-
-                    if (!senderExists)
-                    {
-                        srList.Add(cheque.Sender, new List<string>());
-
-                        if (!allReceiverExists)
-                        {
-                            if (!string.IsNullOrEmpty(toBeRemovedRoot))
-                            {
-                                rootList.Remove(toBeRemovedRoot);
-                                toBeRemovedRoot = string.Empty;
-                            }
-
-                            rootList.Add(cheque.Sender);
-
-                            if (receiverExists)
-                            {
-                                if (rootList.Count > 1)
-                                {
-                                    rootList.Remove(cheque.Receiver);
-                                }
-                                else
-                                {
-                                    toBeRemovedRoot = cheque.Receiver;
-                                }
-                            }
-                        }
-                    }
-
-                    List<string> receiverList = srList[cheque.Sender];
-
-                    if (!receiverList.Contains(cheque.Receiver))
-                    {
-                        receiverList.Add(cheque.Receiver);
-                    }
-
-                }
-            }
-
-            senderReceiverList.RootList = rootList;
-            senderReceiverList.TotalList = srList;
-
-            return senderReceiverList;
-        }
-
-        private static LoopResult GetLoopResult(List<string> path, string loopElement)
-        {
-            LoopResult result = new LoopResult();
-            result.Items = path;
-
-            if (!string.IsNullOrEmpty(loopElement))
-            {
-                int start = path.IndexOf(loopElement);
-                int end = path.LastIndexOf(loopElement);
-
-                if (start < 0 || end < 0 || end <= start)
-                {
-                    throw new Exception(ResourceHelper.GetString("InvalidLoopIndex"));
-                }
-
-                result.Loop = path.GetRange(start, (end - start) + 1);
-                result.HasLoop = true;
-                result.LoopHtmlText = GetLoopText(result.Items, result.Loop);
-            }
-
-            return result;
-        }
-
-        private static string GetLoopText(List<string> items, List<string> loop)
-        {
-            string itemsText = items != null ? string.Join("->", items) : string.Empty;
-            string loopText = loop != null ? string.Join("->", loop) : string.Empty;
-
-            if (!string.IsNullOrEmpty(itemsText) && !string.IsNullOrEmpty(loopText))
-            {
-                int startIndex = itemsText.IndexOf(loopText);
-
-                if (startIndex > -1)
-                {
-                    if (loopText.Length + startIndex <= itemsText.Length)
-                    {
-                        string first = startIndex > 0 ? itemsText.Substring(0, startIndex) : string.Empty;
-                        string highLight = string.Format("<span class\"loopHightLight\" style=\"font-size: large;font-weight: bold;\">{0}</span>", itemsText.Substring(startIndex, loopText.Length));
-                        string last = startIndex + loopText.Length == itemsText.Length ? string.Empty : itemsText.Substring(startIndex + +loopText.Length);
-
-                        return string.Format("{0}{1}{2}", first, highLight, last);
-                    }
-                    else
-                    {
-                        return ResourceHelper.GetString("NoLoopFound");
-                    }
-                }
-                else
-                {
-                    return ResourceHelper.GetString("NoLoopMatching");
-                }
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return null;
         }
 
         public static void InsertUiErrorLog(string message)
@@ -316,21 +116,21 @@ namespace LinkedListLoop.src.server
                 XDocument xmlFile = XDocument.Parse(logText);
 
                 var data = from item in xmlFile.Descendants("LogEntry")
-                    select new Log
-                    {
-                        ComputerName = Common.GetXmlElementValue(item, "ComputerName"),
-                        Date = DateTime.Parse(Common.GetXmlElementValue(item, "Date")),
-                        Level = Common.GetXmlElementValue(item, "Level"),
-                        Direction = Common.GetXmlElementValue(item, "Direction").ToEnum<LogDirection>(LogDirection.None),
-                        IP = string.Empty,
-                        Message = Common.GetXmlElementValue(item, "Request"),
-                        Reference = Common.GetXmlElementValue(item, "Reference"),
-                        Url = Common.GetXmlElementValue(item, "Url")
-                        
-                    };
+                           select new Log
+                           {
+                               ComputerName = Common.GetXmlElementValue(item, "ComputerName"),
+                               Date = DateTime.Parse(Common.GetXmlElementValue(item, "Date")),
+                               Level = Common.GetXmlElementValue(item, "Level"),
+                               Direction = Common.GetXmlElementValue(item, "Direction").ToEnum<LogDirection>(LogDirection.None),
+                               IP = string.Empty,
+                               Message = Common.GetXmlElementValue(item, "Request"),
+                               Reference = Common.GetXmlElementValue(item, "Reference"),
+                               Url = Common.GetXmlElementValue(item, "Url")
 
-                logList.AddRange(data.ToList());
-                
+                           };
+
+                logList.AddRange(data.ToList().OrderByDescending(a => a.Date));
+
             }
             else
             {
@@ -428,7 +228,26 @@ namespace LinkedListLoop.src.server
 
         public static List<Language> GetAvailableLanguages()
         {
-            return Common.GetAvailableLanguages();
+            return Common.GetDefinition<List<Language>>(Constants.LanguageListPath);
+        }
+
+        public static List<TranFileInfo> GetUserFiles(string tranType)
+        {
+            FileService fileService = new FileService();
+            List<TranFileInfo> fileList = fileService.GetUserFiles(WebSecurity.CurrentUserName, tranType);
+            fileList = fileList.Select(a => {a.TransactionType = ResourceHelper.GetString(a.TransactionType); return a;}).ToList();
+
+            return fileList;
+        }
+
+        public static FileUploadCheck CheckFileUpload(int fileSize)
+        {
+            FileUploadCheck control = new FileUploadCheck();
+            
+            control.IsUploadValid = fileSize <= Constants.MaxFileUploadBytes;
+            control.Message = ResourceHelper.GetStringFormat("MaxFileUplaodSize", Constants.MaxFileUploadMBytes);
+
+            return control;
         }
     }
 }

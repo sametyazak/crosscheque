@@ -327,4 +327,106 @@
   <data name="LogDetail" xml:space="preserve">
     <value>Log Detay</value>
   </data>
+  <data name="Cheque" xml:space="preserve">
+    <value>Çek</value>
+  </data>
+  <data name="EInvoice" xml:space="preserve">
+    <value>E-Fatura</value>
+  </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>Fatura No</value>
+  </data>
+  <data name="LoadAnyDataToContinue" xml:space="preserve">
+    <value>Devam etmeden önce veri yükleyiniz.</value>
+  </data>
+  <data name="SelectTransactionType" xml:space="preserve">
+    <value>Bir sonraki ekrana geçmek için bir işlem seçiniz.</value>
+  </data>
+  <data name="SelectTranType" xml:space="preserve">
+    <value>Bir sonraki ekrana geçmek için bir işlem seçiniz.</value>
+  </data>
+  <data name="TranType" xml:space="preserve">
+    <value>İşlem Tipi</value>
+  </data>
+  <data name="UploadAFileOrLoadSampleData" xml:space="preserve">
+    <value>Kendi dosyanızı veya örnek dosyayı kullanarak veri yükleyin.</value>
+  </data>
+  <data name="ColoumnDefinitionNotFound" xml:space="preserve">
+    <value>Kolon tanımı bulunamadı: {0}</value>
+  </data>
+  <data name="EmptyLineForFile" xml:space="preserve">
+    <value>Boş satır var, satır no: {0}</value>
+  </data>
+  <data name="InvalidHeaderOrRowColumnNumber" xml:space="preserve">
+    <value>Başlık kolon sayısı ile satır kolon sayısı uyumsuz. Satır no: {0} - Başlık kolon sayısı: {1} - Satır kolon sayısı : {2}</value>
+  </data>
+  <data name="NoColumnForFileWithDelimiter" xml:space="preserve">
+    <value>Ayraç bulunamadı: {0}</value>
+  </data>
+  <data name="PropertyNotFound" xml:space="preserve">
+    <value>Property bulunamadı: {0}</value>
+  </data>
+  <data name="AddFiles" xml:space="preserve">
+    <value>Dosya Ekle</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="LoopList" xml:space="preserve">
+    <value>Döngü Listesi</value>
+  </data>
+  <data name="RecordUploadContainer" xml:space="preserve">
+    <value>Veri Yükleme</value>
+  </data>
+  <data name="SelectUploadType" xml:space="preserve">
+    <value>İşlenecek olan veriyi yükleyiniz.</value>
+  </data>
+  <data name="TransactionList" xml:space="preserve">
+    <value>İşlem Listesi</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Yükle</value>
+  </data>
+  <data name="MaxFileUplaodSize" xml:space="preserve">
+    <value>Yüklenebilecek max. dosya boyutu : {0} mb</value>
+  </data>
+  <data name="CompanyInfo" xml:space="preserve">
+    <value>Şirket Bilgisi</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Bitti</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>Dosya Adı</value>
+  </data>
+  <data name="HistoryRecords" xml:space="preserve">
+    <value>Geçmiş Kayıtlar</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="InsertTime" xml:space="preserve">
+    <value>Ekleme Zamanı</value>
+  </data>
+  <data name="ProcessResult" xml:space="preserve">
+    <value>İşleme Başla</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Hazır</value>
+  </data>
+  <data name="RecordCount" xml:space="preserve">
+    <value>Kayıt Sayısı</value>
+  </data>
+  <data name="SeeOnNetwork" xml:space="preserve">
+    <value>Ağ Üzerinde Gör</value>
+  </data>
+  <data name="TransactionType" xml:space="preserve">
+    <value>İşlem Tipi</value>
+  </data>
+  <data name="UserInfo" xml:space="preserve">
+    <value>Kullanıcı Bilgisi</value>
+  </data>
 </root>

@@ -1,0 +1,7 @@
+﻿[
+	{ Operator: '=', Name: 'equals' },
+	{ Operator: '>', Name: 'grater than' },
+	{ Operator: '<', Name: 'less than' },
+	{ Operator: '>=', Name: 'equals or grater' },
+	{ Operator: '<=', Name: 'equals or less' }
+]

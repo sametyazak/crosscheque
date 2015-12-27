@@ -7,12 +7,15 @@ namespace LinkedListLoop.src.server.entities
 {
     public class NetworkItem
     {
-        public string Sender { get; set; }
+        [CustomeDbAttribute("Sender")]
+        public string from { get; set; }
 
-        public string Receiver { get; set; }
+        [CustomeDbAttribute("Receiver")]
+        public string to { get; set; }
 
-        public int NodeValue { get; set; }
+        [CustomeDbAttribute("RecordCount")]
+        public int value { get; set; }
 
-        public string EdgeTitle { get; set; }
+        public string title { get; set; }
     }
 }

@@ -39,6 +39,42 @@ namespace LinkedListLoop.src.server
             }
         }
 
+        public static string GetStringFormat(string key, object args1)
+        {
+            try
+            {
+                ResourceManager resourceMgr = GetResourceManger();
+
+                string resource = resourceMgr.GetString(key, GlobalConfiguration.CurrentCulture);
+                string format = resource != null ? resource : key;
+
+                return string.Format(format, args1);
+            }
+            catch (Exception ex)
+            {
+                LogManager.InsertExceptionLog(ex);
+                return key;
+            }
+        }
+
+        public static string GetStringFormat(string key, object[] args)
+        {
+            try
+            {
+                ResourceManager resourceMgr = GetResourceManger();
+
+                string resource = resourceMgr.GetString(key, GlobalConfiguration.CurrentCulture);
+                string format = resource != null ? resource : key;
+
+                return string.Format(format, args);
+            }
+            catch (Exception ex)
+            {
+                LogManager.InsertExceptionLog(ex);
+                return key;
+            }
+        }
+
         public static string GetResourcePath()
         {
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"resources");

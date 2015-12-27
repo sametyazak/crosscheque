@@ -13,5 +13,11 @@ namespace LinkedListLoop.src.server.entities
         public List<NetworkItem> NetworkList { get; set; }
 
         public List<NodeItem> NodeList { get; set; }
+
+        public string Message { get; set; }
+
+        public List<KeyValue> ProcessPerformace { get; set; }
+
+        public bool CanSeePerformanceResult { get; set; }
     }
 }

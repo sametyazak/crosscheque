@@ -1,4 +1,5 @@
 ﻿var ServerCall = {
+    ProcessCount: 0,
     Execute: function (options) {
         try
         {
@@ -14,7 +15,7 @@
             var url = $('#RootAddress').val() + '/ServerCall.ashx';
             var async = Core.IsUndefined(options.async) ? true : options.async;
 
-            Core.ShowOverlay();
+            ServerCall.PreProcess(options);
 
             var ajaxOptions = {
                 type: "POST",
@@ -41,17 +42,18 @@
                         }
                     }
 
-                    Core.HideOverlay();
+                    ServerCall.PostProcess(options);
                 },
                 fail: function (transport) {
                     if (Core.IsFunction(options.failCallBack)) {
                         Core.DynamicCall(options.failCallBack, []);
                     }
 
-                    Core.HideOverlay();
+                    ServerCall.PostProcess(options);
                 }
             }
 
+            //ServerCall.ProcessCount++;
             $.ajax(ajaxOptions);
 
             if (!async)
@@ -61,7 +63,20 @@
         }
         catch (ex)
         {
-            Core.HideOverlay();
+            ServerCall.PostProcess(options);
         }
+    },
+
+    PreProcess: function (options)
+    {
+        ServerCall.ProcessCount++;
+        Core.ShowOverlay();
+    },
+
+    PostProcess: function (options)
+    {
+        ServerCall.ProcessCount--;
+
+        Core.HideOverlay();
     }
 };

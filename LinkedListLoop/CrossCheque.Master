@@ -31,8 +31,8 @@
     <link href="design/TopMenu.css" rel="stylesheet" />
     <link href="design/LeftMenu.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+   <%-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">--%>
 
     <script type="text/javascript" charset="utf-8">
 
@@ -113,28 +113,6 @@
 
         <a href="#" id="toggleLeftMenu" class="toggle-left-menu"><span></span></a>
         <div class="top-menu-primary" id="TopMenu">
-
-
-            <div id="SampleDataContainer" class="sample-data-container">
-                <div class="tooltip active">
-                    <div class="arrow"></div>
-
-                    <div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 150px; height: 30px;" view_id="$LoadSample">
-                        <button id="btnLoadSample" class="webixtype_base" type="button"></button>
-                    </div>
-
-                </div>
-            </div>
-
-            <div id="UploadDataContainer" class="sample-data-container">
-                <div class="tooltip active">
-                    <div class="arrow"></div>
-                    <input id="FileUpload" type="file" />
-                    <div class="webix_view webix_control webix_el_button" style="display: inline-block; vertical-align: top; border-width: 0px; margin-top: 8px; margin-left: -1px; width: 100px; height: 30px;" view_id="$Upload">
-                        <button id="btnUploadFile" class="webixtype_base" type="button"></button>
-                    </div>
-                </div>
-            </div>
 
             <div class="grid">
                 <div class="nav-secondary-2" id="TopNavUlContainer">

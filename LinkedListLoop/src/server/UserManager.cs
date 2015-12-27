@@ -128,6 +128,18 @@ namespace LinkedListLoop.src.server
             return roles.GetRolesForUser(userName);
         }
 
+        public static bool UserHasRole(string userName, string roleName)
+        {
+            var roles = (SimpleRoleProvider)Roles.Provider;
+            return roles.IsUserInRole(userName, roleName);
+        }
+
+        public static bool CurrentUserHasRole(string roleName)
+        {
+            var roles = (SimpleRoleProvider)Roles.Provider;
+            return roles.IsUserInRole(WebSecurity.CurrentUserName, roleName);
+        }
+
         public static void AddUserRole(string userName, string roleName)
         {
             var roles = (SimpleRoleProvider)Roles.Provider;

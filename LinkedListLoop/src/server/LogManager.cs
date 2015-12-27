@@ -57,13 +57,13 @@ namespace LinkedListLoop.src.server
 
         }
 
-        public static void InsertServerCallLog(object message, string reference, LogDirection direction)
+        public static void InsertServerCallLog(object message, string reference, LogDirection direction, System.Web.HttpContext context)
         {
             if (GlobalConfiguration.IsServerSideLogEnabled)
             {
                 Log logEntity = new Log();
 
-                //logEntity.ComputerName = HttpContext.Current.Request.UserHostName;
+                logEntity.ComputerName = Common.GetClientIp(context);
                 logEntity.Date = DateTime.Now;
                 logEntity.Message = message;
                 logEntity.Reference = reference;

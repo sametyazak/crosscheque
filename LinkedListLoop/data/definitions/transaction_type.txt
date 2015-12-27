@@ -1,0 +1,25 @@
+﻿[
+	{ 
+		Name: 'Cheque', Value: 'Cheque', ServiceName: 'LinkedListLoop.src.server.transaction_types.Cheque.ChequeService', 
+		SampleDataPath: 'Data\\sample_data\\cc_sample_data_cheque.csv',
+		FileReader: 'LinkedListLoop.src.CsvReader',
+		ColumnList: [
+			{ Name: 'Sender', EntryType: 'text', Header: 'Sender', Width: 100, FileFieldName: 'Gönderen'},
+			{ Name: 'Receiver', EntryType: 'text', Header: 'Receiver', Width: 100, FileFieldName: 'Alıcı' },
+			{ Name: 'Amount', EntryType: 'text', Header: 'Amount', Width: 80, FileFieldName: 'Tutar' },
+			{ Name: 'Date', EntryType: 'date', Header: 'Date', Width: 100, FileFieldName: 'Tarih' }
+		]
+	},
+	{ 
+		Name: 'EInvoice', Value: 'EInvoice', ServiceName: 'LinkedListLoop.src.server.transaction_types.Cheque.EInvoiceService', 
+		SampleDataPath: 'Data\\sample_data\\cc_sample_data_einvoice.csv',
+		FileReader: 'LinkedListLoop.src.CsvReader',
+		ColumnList: [
+			{ Name: 'Sender', EntryType: 'text', Header: 'Sender', Width: 100, FileFieldName: 'Gönderen' },
+			{ Name: 'Receiver', EntryType: 'text', Header: 'Receiver', Width: 100, FileFieldName: 'Alıcı' },
+			{ Name: 'Amount', EntryType: 'text', Header: 'Amount', Width: 80, FileFieldName: 'Tutar' },
+			{ Name: 'Date', EntryType: 'date', Header: 'Date', Width: 100, FileFieldName: 'Tarih' },
+			{ Name: 'InvoiceNumber', EntryType: 'text', Header: 'InvoiceNumber', Width: 120, FileFieldName: 'FaturaNo' }
+		]
+	}
+]

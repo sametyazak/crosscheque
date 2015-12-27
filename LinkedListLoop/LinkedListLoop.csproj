@@ -38,6 +38,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataStreams, Version=5.22.0.0, Culture=neutral, PublicKeyToken=9c9b03c227e1bea6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>external_reference\DataStreams.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetOpenAuth.AspNet">
       <HintPath>..\DotNetOpenAuth.AspNet.4.0.3.12153\lib\net40-full\DotNetOpenAuth.AspNet.dll</HintPath>
     </Reference>
@@ -57,10 +61,25 @@
       <HintPath>..\DotNetOpenAuth.OpenId.RelyingParty.4.0.3.12153\lib\net40-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.BulkInsert, Version=6.0.2.8, Culture=neutral, PublicKeyToken=630a17433349cb76, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.BulkInsert-ef6.6.0.2.8\lib\Net45\EntityFramework.BulkInsert.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.MappingAPI, Version=6.0.0.9, Culture=neutral, PublicKeyToken=7ee2e825d201459e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntityFramework.MappingAPI.6.0.0.7\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="LumenWorks.Framework.IO, Version=3.8.0.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>external_reference\LumenWorks.Framework.IO.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.WebPages.OAuth, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -68,7 +87,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>external_reference\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -98,6 +117,9 @@
     <Content Include="app\ChequeLoop.aspx" />
     <Content Include="app\ChequeLoop.js" />
     <Content Include="app\ChequeLoop_20150928.js" />
+    <Content Include="app\test\Test.aspx" />
+    <Content Include="app\transaction\Scenario.aspx" />
+    <Content Include="app\transaction\Scenario.js" />
     <Content Include="app\Unauthorized.aspx" />
     <Content Include="app\user\ChangePassword.aspx" />
     <Content Include="app\user\ChangePassword.js" />
@@ -113,20 +135,28 @@
     <Content Include="data\definitions\guest.txt" />
     <Content Include="data\definitions\language.txt" />
     <Content Include="data\definitions\LeftMenu.txt" />
+    <Content Include="data\definitions\scenario_functions.txt" />
+    <Content Include="data\definitions\scenario_operations.txt" />
+    <Content Include="data\definitions\transaction_type.txt" />
     <Content Include="Default2.aspx" />
     <Content Include="design\CrossCheque.css" />
     <Content Include="design\LeftMenu.css" />
     <Content Include="design\TopMenu.css" />
+    <Content Include="external_reference\DataStreams.dll" />
+    <Content Include="external_reference\DataStreams.xml" />
     <Content Include="external_reference\FileHelpers.dll" />
     <Content Include="external_reference\FileHelpers.ExcelNPOIStorage.dll" />
     <Content Include="external_reference\FileHelpers.ExcelNPOIStorage.xml" />
     <Content Include="external_reference\FileHelpers.ExcelStorage.dll" />
     <Content Include="external_reference\FileHelpers.ExcelStorage.xml" />
     <Content Include="external_reference\FileHelpers.xml" />
+    <Content Include="external_reference\LumenWorks.Framework.IO.dll" />
+    <Content Include="external_reference\LumenWorks.Framework.IO.XML" />
     <Content Include="external_reference\Newtonsoft.Json.dll" />
     <Content Include="external_reference\Newtonsoft.Json.pdb" />
     <Content Include="external_reference\Newtonsoft.Json.xml" />
     <Content Include="FileDownload.aspx" />
+    <Content Include="FileUpload.aspx" />
     <Content Include="Global.asax" />
     <Content Include="img\Cheque.PNG" />
     <Content Include="img\header-icons.svg" />
@@ -146,6 +176,9 @@
     <Content Include="img\play.png" />
     <Content Include="lib\jquery\jquery-2.1.4.min.js" />
     <Content Include="lib\jquery\jquery-ui.js" />
+    <Content Include="lib\jquery\jquery.fileupload.js" />
+    <Content Include="lib\jquery\jquery.iframe-transport.js" />
+    <Content Include="lib\jquery\json_parse.js" />
     <Content Include="lib\vis\img\network\acceptDeleteIcon.png" />
     <Content Include="lib\vis\img\network\addNodeIcon.png" />
     <Content Include="lib\vis\img\network\backIcon.png" />
@@ -182,10 +215,26 @@
     <Content Include="src\client\Template.js" />
     <Content Include="src\client\TopMenu.js" />
     <Content Include="src\client\lang\tr-TR.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Default.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="app\test\Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\test\Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="app\transaction\Scenario.aspx.cs">
+      <DependentUpon>Scenario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="app\transaction\Scenario.aspx.designer.cs">
+      <DependentUpon>Scenario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="app\Unauthorized.aspx.cs">
       <DependentUpon>Unauthorized.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -242,9 +291,21 @@
     <Compile Include="Default2.aspx.designer.cs">
       <DependentUpon>Default2.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FileUpload.aspx.cs">
+      <DependentUpon>FileUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FileUpload.aspx.designer.cs">
+      <DependentUpon>FileUpload.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511171146479_InitialCreate.cs" />
+    <Compile Include="Migrations\201511171146479_InitialCreate.Designer.cs">
+      <DependentUpon>201511171146479_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ServerCall.ashx.cs">
       <DependentUpon>ServerCall.ashx</DependentUpon>
     </Compile>
@@ -252,7 +313,37 @@
       <DependentUpon>Service.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="src\server\context\EntityContext.cs" />
+    <Compile Include="src\server\db_connection\IDb.cs" />
+    <Compile Include="src\server\db_connection\MsDb.cs" />
+    <Compile Include="src\server\entities\Constants.cs" />
+    <Compile Include="src\server\entities\CustomeDbAttribute.cs" />
+    <Compile Include="src\server\entities\FileContentLocation.cs" />
+    <Compile Include="src\server\entities\FileUploadCheck.cs" />
+    <Compile Include="src\server\entities\FileUploadResponse.cs" />
+    <Compile Include="src\server\entities\KeyValue.cs" />
+    <Compile Include="src\server\entities\TranFileInfo.cs" />
+    <Compile Include="src\server\entities\GetFilesRequest.cs" />
+    <Compile Include="src\server\entities\KnownException.cs" />
+    <Compile Include="src\server\entities\ProcessFileRequest.cs" />
+    <Compile Include="src\server\entities\TransactionHelper.cs" />
+    <Compile Include="src\server\file_reader\GenericDataReader.cs" />
+    <Compile Include="src\server\transaction\ScenarioFunction.cs" />
+    <Compile Include="src\server\transaction\ScenarioOperation.cs" />
+    <Compile Include="src\server\transaction_types\Cheque\ChequeProcessor.cs" />
+    <Compile Include="src\server\transaction_types\Cheque\ChequeService.cs" />
+    <Compile Include="src\server\transaction_types\EInvoice\EInvoiceService.cs" />
+    <Compile Include="src\server\transaction_types\EInvoice\EInvoiceInfo.cs" />
+    <Compile Include="src\server\transaction_types\EInvoice\EInvoiceProcessor.cs" />
+    <Compile Include="src\server\transaction_types\File\FileService.cs" />
+    <Compile Include="src\server\transaction_types\ITransactionService.cs" />
+    <Compile Include="src\server\transaction_types\TransactionProcessor.cs" />
+    <Compile Include="src\server\transaction_types\TransactionType.cs" />
+    <Compile Include="src\server\transaction_types\TransactionTypeDefinition.cs" />
     <Compile Include="src\server\entities\Language.cs" />
+    <Compile Include="src\server\transaction_types\UiGridColumn.cs" />
+    <Compile Include="src\server\file_reader\IFileReader.cs" />
+    <Compile Include="src\server\initializer\EntityInitializer.cs" />
     <Compile Include="src\server\ResourceHelper.cs" />
     <Compile Include="src\server\entities\LogDirection.cs" />
     <Compile Include="src\server\AjaxMethods.cs">
@@ -264,7 +355,7 @@
     <Compile Include="src\server\entities\AccessLevel.cs" />
     <Compile Include="src\server\entities\AjaxResult.cs" />
     <Compile Include="src\server\entities\ChequeCustomer.cs" />
-    <Compile Include="src\server\entities\ChequeInfo.cs" />
+    <Compile Include="src\server\transaction_types\Cheque\ChequeInfo.cs" />
     <Compile Include="app\ChequeLoop.aspx.cs">
       <DependentUpon>ChequeLoop.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -290,7 +381,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\server\Common.cs" />
     <Compile Include="src\server\Converter.cs" />
-    <Compile Include="src\server\CsvReader.cs" />
+    <Compile Include="src\server\file_reader\CsvReader.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -304,13 +395,13 @@
     <Compile Include="src\server\entities\SaveRequest.cs" />
     <Compile Include="src\server\entities\SenderReceiverList.cs" />
     <Compile Include="src\server\entities\User.cs" />
-    <Compile Include="src\server\entities\UsersContext.cs" />
+    <Compile Include="src\server\context\UsersContext.cs" />
     <Compile Include="src\server\LogManager.cs" />
     <Compile Include="src\server\MethodFinder.cs" />
     <Compile Include="src\server\UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\cc_sample_data.csv" />
+    <Content Include="data\sample_data\cc_sample_data_cheque.csv" />
     <Content Include="FileUploader.ashx" />
     <Content Include="CrossCheque.Master" />
     <Content Include="ServerCall.ashx" />
@@ -328,6 +419,7 @@
     <Content Include="lib\webix\fonts\PTS-webfont.eot" />
     <Content Include="lib\webix\fonts\PTS-webfont.ttf" />
     <Content Include="lib\webix\fonts\PTS-webfont.woff" />
+    <Content Include="data\sample_data\cc_sample_data_einvoice.csv" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -341,8 +433,17 @@
     <Folder Include="lib\jqwidgets\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511171146479_InitialCreate.resx">
+      <DependentUpon>201511171146479_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="resources\strings.en-US.resx" />
     <EmbeddedResource Include="resources\strings.tr-TR.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LinkedListLoop.Evaluator\LinkedListLoop.Evaluator.csproj">
+      <Project>{66146b28-05bc-4a48-a372-5e69a48ff032}</Project>
+      <Name>LinkedListLoop.Evaluator</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

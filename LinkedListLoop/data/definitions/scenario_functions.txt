@@ -1,0 +1,5 @@
+﻿[
+	{ Name: 'Sum', Value: 'Sum' },
+	{ Name: 'Count', Value: 'Count' },
+	{ Name: 'GroupBy', Value: 'GroupBy' },
+]

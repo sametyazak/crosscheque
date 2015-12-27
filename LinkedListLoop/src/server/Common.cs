@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Web;
@@ -19,31 +20,6 @@ namespace LinkedListLoop.src
 {
     public static class Common
     {
-        public static List<ChequeInfo> GetFileChequeList(string path, bool deleteFile)
-        {
-            CsvReader<ChequeInfo> fileList = new CsvReader<ChequeInfo>();
-            List<ChequeInfo> chequeList = fileList.GetTempList(path);
-
-            if (File.Exists(path) && deleteFile)
-            {
-                File.Delete(path);
-            }
-
-            return chequeList;
-        }
-
-        //private static List<ChequeInfo> ConvertChequeListFromFile(List<ChequeInfoFile> fileRecords)
-        //{
-        //    List<ChequeInfo> chequeList = new List<ChequeInfo>();
-
-        //    foreach (ChequeInfoFile record in fileRecords)
-        //    {
-        //        chequeList.Add(GetChequeInfo(record.Sender, record.Receiver, record.Amount));
-        //    }
-
-        //    return chequeList;
-        //}
-
         public static ChequeInfo GetChequeInfo(string sender, string receiver, decimal amount)
         {
             ChequeInfo cheque = new ChequeInfo();
@@ -52,31 +28,6 @@ namespace LinkedListLoop.src
             cheque.Sender = sender;
             cheque.Date = DateTime.Now.ToString("yyyy-MM-dd");
             return cheque;
-        }
-
-        public static string GetSampleDataFilePath()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\cc_sample_data.csv");
-        }
-
-        public static string GetMenuItemPath()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\definitions\LeftMenu.txt");
-        }
-
-        public static string GetJsDirectory()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"src\client\lang\");
-        }
-
-        public static string GetGuestInfoPath()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\definitions\guest.txt");
-        }
-
-        public static string GetLanguageDefPath()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\definitions\language.txt");
         }
 
         public static string GetLogFileName()
@@ -128,79 +79,43 @@ namespace LinkedListLoop.src
 
         public static List<MenuItem> GetMenuItems()
         {
-            string menuPath = GetMenuItemPath();
+            List<MenuItem> menuList = GetDefinition<List<MenuItem>>(Constants.MenuItemsPath);
 
-            if (File.Exists(menuPath))
-            {
-                using (StreamReader reader = new StreamReader(menuPath))
-                {
-                    string menuJson = reader.ReadToEnd();
+            menuList.Select(a => { a.Link = a.IsLocal ? string.Concat(GlobalConfiguration.Host, a.Link) : a.Link; return a; }).ToList();
+            menuList.Select(a => { a.Title = ResourceHelper.GetString(a.Title); return a; }).ToList();
 
-                    if (!string.IsNullOrEmpty(menuJson))
-                    {
-                        List<MenuItem> menuList = JsonConvert.DeserializeObject<List<MenuItem>>(menuJson);
-                        menuList.Select(a => { a.Link = a.IsLocal ? string.Concat(GlobalConfiguration.Host, a.Link) : a.Link; return a; }).ToList();
-                        menuList.Select(a => { a.Title = ResourceHelper.GetString(a.Title); return a; }).ToList();
-
-                        return menuList;
-                    }
-                    else
-                    {
-                        throw new Exception(ResourceHelper.GetString("InvalidMenuDefinition"));
-                    }
-                }
-            }
-            else
-            {
-                throw new Exception(ResourceHelper.GetString("MenuDefinitionFileNotFound"));
-            }
+            return menuList;
         }
 
-        public static List<Language> GetAvailableLanguages()
+        public static T GetDefinition<T>(string path) where T : class
         {
-            string langPath = GetLanguageDefPath();
-
-            if (File.Exists(langPath))
+            if (File.Exists(path))
             {
-                using (StreamReader reader = new StreamReader(langPath))
+                using (StreamReader reader = new StreamReader(path))
                 {
-                    string langJson = reader.ReadToEnd();
+                    string json = reader.ReadToEnd();
 
-                    if (!string.IsNullOrEmpty(langJson))
+                    if (!string.IsNullOrEmpty(json))
                     {
-                        List<Language> langList = JsonConvert.DeserializeObject<List<Language>>(langJson);
-                        return langList;
+                        T list = JsonConvert.DeserializeObject<T>(json);
+                        return list;
                     }
                     else
                     {
-                        throw new Exception(ResourceHelper.GetString("InvalidLanguageDefinition"));
+                        throw new Exception(ResourceHelper.GetString("InvalidDefinitionForm"));
                     }
                 }
             }
             else
             {
-                throw new Exception(ResourceHelper.GetString("LanguageDefinitionFileNotFound"));
+                throw new Exception(ResourceHelper.GetStringFormat("DefinitionPathNotFound", path));
             }
         }
 
         public static LoginModel GetGuestInfo()
         {
-            string guestPath = GetGuestInfoPath();
-
-            if (File.Exists(guestPath))
-            {
-                using (StreamReader reader = new StreamReader(guestPath))
-                {
-                    string guestJson = reader.ReadToEnd();
-
-                    LoginModel guestInfo = JsonConvert.DeserializeObject<LoginModel>(guestJson);
-                    return guestInfo;
-                }
-            }
-            else
-            {
-                throw new Exception(ResourceHelper.GetString("GuestFileNotFound"));
-            }
+            LoginModel guestLogin = GetDefinition<LoginModel>(Constants.GuestLoginInfoPath);
+            return guestLogin;
         }
 
         public static List<string> GetAvailableRoles(AccessLevel minLevel)
@@ -212,7 +127,7 @@ namespace LinkedListLoop.src
 
         public static string GenerateMLJavascript()
         {
-            string jsPath = GetJsDirectory();
+            string jsPath = Constants.MultiLingualJSPath;
             string resourcePath = ResourceHelper.GetResourcePath();
 
             string[] resourceFiles = Directory.GetFiles(resourcePath, "*.resx");
@@ -252,5 +167,43 @@ namespace LinkedListLoop.src
 
             return "ok";
         }
+
+        public static string GetClientIp(System.Web.HttpContext context)
+        {
+            if (context != null)
+            {
+                string ipAddress = context.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+
+                if (!string.IsNullOrEmpty(ipAddress))
+                {
+                    string[] addresses = ipAddress.Split(',');
+                    if (addresses.Length != 0)
+                    {
+                        return addresses[0];
+                    }
+                }
+
+                return context.Request.ServerVariables["REMOTE_ADDR"];
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        public static object GetDynamicObject(string className)
+        {
+            Type transportType = Type.GetType(className);
+
+            if (transportType != null)
+            {
+                return Activator.CreateInstance(transportType);
+            }
+            else
+            {
+                throw new Exception(ResourceHelper.GetStringFormat("ClassNotFound", className));
+            }
+        }
+
     }
 }

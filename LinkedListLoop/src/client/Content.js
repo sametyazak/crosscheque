@@ -26,6 +26,7 @@
 
         this.BindEvents(conf);
         this.SetNavigationTitle();
+        this.SetHint();
     },
 
     CreateSlidingNavigation: function (mainContainer) {
@@ -55,6 +56,12 @@
     CreateSlidingMenuItems: function (mainContainer, conf) {
         var contentContainer = $('#' + this.ContainerId + '_SlidingContent');
         if (!contentContainer) return;
+
+        var hintContainer = $('<div></div>');
+        hintContainer.addClass('sliding-hint');
+        hintContainer.attr('id', this.ContainerId + '_SlidingHint');
+
+        contentContainer.append(hintContainer);
 
         for (var i = 0; i < conf.MenuItems.length; i++) {
             var menuItem = conf.MenuItems[i];
@@ -142,6 +149,7 @@
 
             this.SetTopMenuNavItemOpacity(this.CurrentMenuItem, --this.CurrentMenuItem);
             this.SetNavigationTitle();
+            this.SetHint();
         }
     },
 
@@ -154,6 +162,17 @@
         if (this.CurrentMenuItem < (this.MenuItems.length - 1)) {
             var currentDiv = $('#' + this.MenuItems[this.CurrentMenuItem].MenuId);
             var nextDiv = $('#' + this.MenuItems[this.CurrentMenuItem + 1].MenuId);
+
+            var onValidate = this.MenuItems[this.CurrentMenuItem].OnValidate;
+            if (Core.IsFunction(onValidate))
+            {
+                var validationResult = Core.DynamicCall(onValidate, null);
+
+                if (!validationResult)
+                {
+                    return;
+                }
+            }
 
             Core.ShowOverlay();
 
@@ -174,6 +193,7 @@
 
             this.SetTopMenuNavItemOpacity(this.CurrentMenuItem, ++this.CurrentMenuItem);
             this.SetNavigationTitle();
+            this.SetHint();
         }
     },
 
@@ -247,6 +267,16 @@
 
         if (this.CurrentMenuItem > (this.MenuItems.length - 1)) {
             this.CurrentMenuItem = this.MenuItems.length - 1;
+        }
+    },
+
+    SetHint: function ()
+    {
+        var hint = $('#' + this.ContainerId + '_SlidingHint');
+
+        if (hint)
+        {
+            hint.html(this.MenuItems[this.CurrentMenuItem].Hint);
         }
     }
 }

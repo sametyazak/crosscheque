@@ -34,14 +34,14 @@ namespace LinkedListLoop
 
                     if (queryInfo.LogRequest)
                     {
-                        LogManager.InsertServerCallLog(queryData, callReference, LogDirection.ServerRequest);
+                        LogManager.InsertServerCallLog(queryData, callReference, LogDirection.ServerRequest, context);
                     }
 
                     var result = MethodFinder.CallAjaxMethod(queryInfo.ServerSideMethod, queryInfo.Data);
 
                     if (queryInfo.LogRequest)
                     {
-                        LogManager.InsertServerCallLog(result, callReference, LogDirection.ServerResponse);
+                        LogManager.InsertServerCallLog(result, callReference, LogDirection.ServerResponse, context);
                     }
 
                     context.Response.Write(JsonConvert.SerializeObject(result));

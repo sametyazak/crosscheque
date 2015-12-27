@@ -1,6 +1,11 @@
-﻿using LinkedListLoop.src;
+﻿using LinkedListLoop.entities;
+using LinkedListLoop.src;
 using LinkedListLoop.src.server;
 using LinkedListLoop.src.server.entities;
+using LinkedListLoop.src.server.entities.transaction_types;
+using LinkedListLoop.src.server.entities.transaction_types.Cheque;
+using LinkedListLoop.src.server.entities.transaction_types.EInvoice;
+using LinkedListLoop.src.server.transaction_types.Cheque;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -29,13 +34,17 @@ namespace LinkedListLoop
 
             GlobalConfiguration.IsClientSideLogEnabled = true;
             GlobalConfiguration.IsServerSideLogEnabled = true;
-            GlobalConfiguration.CurrentCulture = new CultureInfo("tr-TR");
+            GlobalConfiguration.CurrentCulture = new CultureInfo(Constants.DefaultCulture);
+
         }
 
         protected void Session_Start(object sender, EventArgs e)
         {
             GlobalConfiguration.Host = HttpContext.Current.Request.Url.AbsoluteUri.Replace(HttpContext.Current.Request.Url.PathAndQuery, "");
             GlobalConfiguration.MenuList = Common.GetMenuItems();
+            GlobalConfiguration.TransctionTypes = Common.GetDefinition<List<TransactionType>>(Constants.TransactionTypePath);
+
+            GlobalConfiguration.TransactionProcessors = TransactionHelper.GetTransactionProcessors();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -66,6 +75,7 @@ namespace LinkedListLoop
         private void SimpleMembershipInitializer()
         {
             Database.SetInitializer<UsersContext>(null);
+            Database.SetInitializer<EntityContext>(null);
 
             try
             {
